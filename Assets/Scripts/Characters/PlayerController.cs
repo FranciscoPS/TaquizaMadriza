@@ -1,6 +1,7 @@
 using System.Collections;
 using TaquizaMadriza.Characters;
 using TaquizaMadriza.Combat;
+using TaquizaMadriza.Audio;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -48,6 +49,9 @@ namespace TaquizaMadriza.Characters
         private bool isGrounded;
         private bool jumpRequested;
         private int facingDirection = 1;
+        
+        private float lastStepTime;
+        private const float stepInterval = 0.3f;
 
         private void Awake()
         {
@@ -142,6 +146,11 @@ namespace TaquizaMadriza.Characters
             {
                 stateManager.ChangeState(PlayerState.Idle);
                 combat.OnLanded();
+
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.PlayLandSound();
+                }
             }
         }
 
@@ -172,6 +181,7 @@ namespace TaquizaMadriza.Characters
             if (isGrounded && stateManager.CurrentState == PlayerState.Idle)
             {
                 stateManager.ChangeState(PlayerState.Moving);
+                
             }
 
             if (moveDirection.sqrMagnitude > 0.01f)
@@ -183,6 +193,15 @@ namespace TaquizaMadriza.Characters
 
                 Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
                 transform.rotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
+                
+                if (isGrounded && Time.time - lastStepTime >= stepInterval)
+                {
+                    if (AudioManager.Instance != null)
+                    {
+                        AudioManager.Instance.PlayStepSound();
+                        lastStepTime = Time.time;
+                    }
+                }
             }
         }
 
@@ -196,6 +215,11 @@ namespace TaquizaMadriza.Characters
                     rb.linearVelocity.z
                 );
                 stateManager.ChangeState(PlayerState.Jumping);
+                
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.PlayJumpSound();
+                }
             }
 
             jumpRequested = false;

@@ -60,8 +60,6 @@ namespace TaquizaMadriza.Characters
         {
             health.OnInvulnerabilityChanged += HandleInvulnerabilityChanged;
             health.OnHealthChanged += HandleHealthChanged;
-            
-            Debug.Log($"[PlayerVisualEffects] Inicializado para jugador - Vida: {health.CurrentHealth}/{health.MaxHealth}");
         }
 
         private void OnDestroy()
@@ -77,7 +75,6 @@ namespace TaquizaMadriza.Characters
         {
             if (isInvulnerable)
             {
-                // Si tiene vida baja, priorizar el parpadeo rojo
                 if (lowHealthBlinkCoroutine == null)
                 {
                     StartInvulnerabilityBlink();
@@ -92,22 +89,17 @@ namespace TaquizaMadriza.Characters
         private void HandleHealthChanged(float currentHealth, float maxHealth)
         {
             float healthPercentage = currentHealth / maxHealth;
-            
-            Debug.Log($"[PlayerVisualEffects] Vida cambiada: {currentHealth}/{maxHealth} = {healthPercentage:F2} (Umbral: {lowHealthThreshold})");
 
             if (healthPercentage <= lowHealthThreshold && healthPercentage > 0)
             {
-                Debug.Log("[PlayerVisualEffects] ¡Vida baja! Iniciando parpadeo rojo");
                 if (lowHealthBlinkCoroutine == null)
                 {
-                    // Detener parpadeo de invulnerabilidad si existe
                     StopInvulnerabilityBlink();
                     StartLowHealthBlink();
                 }
             }
             else
             {
-                Debug.Log("[PlayerVisualEffects] Vida normal, deteniendo parpadeo rojo");
                 StopLowHealthBlink();
             }
         }
@@ -130,7 +122,6 @@ namespace TaquizaMadriza.Characters
                 StopCoroutine(invulnerabilityBlinkCoroutine);
                 invulnerabilityBlinkCoroutine = null;
             }
-            // Solo restaurar colores si no hay parpadeo de vida baja activo
             if (lowHealthBlinkCoroutine == null)
             {
                 RestoreOriginalColors();
