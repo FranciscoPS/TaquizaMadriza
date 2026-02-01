@@ -919,7 +919,6 @@ GameObject:
   m_Component:
   - component: {fileID: 933271473}
   - component: {fileID: 933271474}
-  - component: {fileID: 933271475}
   m_Layer: 0
   m_Name: CanvasManager
   m_TagString: Untagged
@@ -956,19 +955,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CanvasManager
   mainMenuPanel: {fileID: 1163589940}
   controlsPanel: {fileID: 314376281}
---- !u!114 &933271475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 933271471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ba1288a96623ac448f24a74ef114d1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PausdeMenu
-  pauseMenuPanel: {fileID: 0}
 --- !u!1 &982482903
 GameObject:
   m_ObjectHideFlags: 0

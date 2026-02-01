@@ -17,6 +17,13 @@ public class WinScreen : MonoBehaviour
 	[Header("Settings")]
 	[SerializeField] private float winDelay = 3f;
 
+	[Header("Slow Motion")]
+	[SerializeField, Range(0.05f, 1f)]
+	private float slowMotionScale = 0.25f;
+
+	[SerializeField]
+	private float slowMotionDuration = 3f;
+
 	private bool matchEnded = false;
 
 	private void Awake()
@@ -40,12 +47,26 @@ public class WinScreen : MonoBehaviour
 		matchEnded = true;
 
 		int winnerNumber = deadPlayer.PlayerNumber == 1 ? 2 : 1;
-		StartCoroutine(ShowWinScreenAfterDelay(winnerNumber));
+		StartCoroutine(WinSequence(winnerNumber));
 	}
 
 	private IEnumerator ShowWinScreenAfterDelay(int winnerPlayer)
 	{
 		yield return new WaitForSeconds(winDelay);
+
+		winnerPlayerTxt.text = $"Player {winnerPlayer} Wins!!";
+		winScreenPanel.SetActive(true);
+	}
+
+	private IEnumerator WinSequence(int winnerPlayer)
+	{
+		Time.timeScale = slowMotionScale;
+		Time.fixedDeltaTime = 0.02f * Time.timeScale;
+
+		yield return new WaitForSecondsRealtime(slowMotionDuration);
+
+		Time.timeScale = 1f;
+		Time.fixedDeltaTime = 0.02f;
 
 		winnerPlayerTxt.text = $"Player {winnerPlayer} Wins!!";
 		winScreenPanel.SetActive(true);
