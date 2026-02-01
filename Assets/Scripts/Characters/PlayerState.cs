@@ -12,6 +12,6 @@ namespace TaquizaMadriza.Characters
         Knockback,
         Grounded,
         GettingUp,
-        Dead
+        Dead,
     }
 }
