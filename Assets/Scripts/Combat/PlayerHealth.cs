@@ -43,6 +43,8 @@ namespace TaquizaMadriza.Combat
         public int PlayerNumber => playerNumber;
         public bool IsInvulnerable => isInvulnerable;
         
+        public bool IsDead() => stateManager.CurrentState == PlayerState.Dead;
+        
         private void Awake()
         {
             stateManager = GetComponent<PlayerStateManager>();
@@ -200,6 +202,56 @@ namespace TaquizaMadriza.Combat
             stateManager.ChangeState(PlayerState.Idle);
             
             OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        }
+        
+        /// <summary>
+        /// Aplica daño del entorno (caer fuera del ring, etc.)
+        /// No aplica knockback, solo daño directo.
+        /// </summary>
+        public void TakeDamageFromEnvironment(float damage)
+        {
+            if (stateManager.CurrentState == PlayerState.Dead)
+                return;
+            
+            // Reducir vida
+            currentHealth -= damage;
+            currentHealth = Mathf.Max(0, currentHealth);
+            
+            // Notificar cambio de vida
+            OnHealthChanged?.Invoke(currentHealth, maxHealth);
+            OnDamageTaken?.Invoke(damage);
+            
+            Debug.Log($"[Health] Jugador {playerNumber} recibe daño ambiental: {damage} (Vida: {currentHealth}/{maxHealth})");
+            
+            // Verificar muerte
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+        }
+        
+        /// <summary>
+        /// Respawnea al jugador en una posición específica con invulnerabilidad
+        /// </summary>
+        public void RespawnAtPosition(Vector3 position, float invulnerabilityTime)
+        {
+            // Detener cualquier movimiento
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            
+            // Asegurar que no es kinematic
+            rb.isKinematic = false;
+            
+            // Reposicionar
+            transform.position = position;
+            
+            // Cambiar estado a Idle
+            stateManager.ChangeState(PlayerState.Idle);
+            
+            // Aplicar invulnerabilidad
+            StartInvulnerability(invulnerabilityTime);
+            
+            Debug.Log($"[Health] Jugador {playerNumber} respawneado en {position} con {invulnerabilityTime}s de invulnerabilidad");
         }
     }
 }

@@ -59,6 +59,19 @@ namespace TaquizaMadriza.Characters
             rb.constraints = RigidbodyConstraints.FreezeRotation;
             rb.useGravity = false;
             rb.interpolation = RigidbodyInterpolation.Interpolate;
+            
+            // Configurar material físico para permitir rebotes
+            Collider playerCollider = GetComponent<Collider>();
+            if (playerCollider != null && playerCollider.material == null)
+            {
+                PhysicsMaterial playerMaterial = new PhysicsMaterial("PlayerMaterial");
+                playerMaterial.bounciness = 0.5f;
+                playerMaterial.frictionCombine = PhysicsMaterialCombine.Minimum;
+                playerMaterial.bounceCombine = PhysicsMaterialCombine.Maximum;
+                playerMaterial.dynamicFriction = 0.3f;
+                playerMaterial.staticFriction = 0.3f;
+                playerCollider.material = playerMaterial;
+            }
         }
         
         private void Start()
