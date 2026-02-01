@@ -26,9 +26,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 447e3da836682489bb4d0e457eabbaf6, type: 3}
   - {fileID: 8300000, guid: 6f2505e70f4174cf6937a8c2f1de3a91, type: 3}
   sfxSteps:
-  - {fileID: 8300000, guid: 482f1edd5df43421a9fbac53ead4745c, type: 3}
-  - {fileID: 8300000, guid: 355bd872182904e85ba5b8417e385254, type: 3}
-  - {fileID: 8300000, guid: 7d5dcd88d656842ccb2833672fe72c06, type: 3}
+  - {fileID: 8300000, guid: 91e68041be7914c53be6caf81daaee7f, type: 3}
+  - {fileID: 8300000, guid: 7a3ddb51f025743f6a31b2a00db41292, type: 3}
+  - {fileID: 8300000, guid: 1c1b6f5667d7a45509e46e8702ac04c0, type: 3}
   - {fileID: 8300000, guid: a2b4cc9b9c01d4bb58db76ff7fa51746, type: 3}
   sfxIntro: {fileID: 8300000, guid: c88575fa730ad43aebbdf60b04f8e369, type: 3}
   sfxKO: {fileID: 8300000, guid: 06c37427480124030a4c9aa2bbba1543, type: 3}
