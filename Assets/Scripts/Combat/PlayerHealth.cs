@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TaquizaMadriza.Audio;
 using TaquizaMadriza.Characters;
 using UnityEngine;
 
@@ -26,6 +27,7 @@ namespace TaquizaMadriza.Combat
         private PlayerStateManager stateManager;
         private Rigidbody rb;
         private PlayerCombat playerCombat;
+        private PlayerAudioController audioController;
 
         private float currentHealth;
 
@@ -48,6 +50,7 @@ namespace TaquizaMadriza.Combat
         {
             stateManager = GetComponent<PlayerStateManager>();
             rb = GetComponent<Rigidbody>();
+            audioController = GetComponent<PlayerAudioController>();
             playerCombat = GetComponent<PlayerCombat>();
 
             currentHealth = maxHealth;
@@ -76,6 +79,11 @@ namespace TaquizaMadriza.Combat
 
             OnHealthChanged?.Invoke(currentHealth, maxHealth);
             OnDamageTaken?.Invoke(damage);
+
+            if (audioController != null)
+            {
+                audioController.PlayHitImpactSound();
+            }
 
             if (currentHealth <= 0)
             {
@@ -118,11 +126,16 @@ namespace TaquizaMadriza.Combat
                 }
 
                 stateManager.ChangeState(PlayerState.Grounded);
+                rb.constraints = RigidbodyConstraints.None;
+                rb.MoveRotation(Quaternion.Euler(0, 0, 90));
                 rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
 
                 yield return new WaitForSeconds(groundedDuration);
 
                 stateManager.ChangeState(PlayerState.GettingUp);
+                rb.MoveRotation(Quaternion.identity);
+                rb.constraints = RigidbodyConstraints.FreezeRotation;
                 StartInvulnerability(invulnerabilityDuration);
 
                 yield return new WaitForSeconds(0.5f);
@@ -181,6 +194,8 @@ namespace TaquizaMadriza.Combat
             currentHealth = maxHealth;
             isInvulnerable = false;
             rb.isKinematic = false;
+            rb.MoveRotation(Quaternion.identity);
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
             stateManager.ChangeState(PlayerState.Idle);
 
             OnHealthChanged?.Invoke(currentHealth, maxHealth);
@@ -211,6 +226,8 @@ namespace TaquizaMadriza.Combat
             rb.isKinematic = false;
 
             transform.position = position;
+            rb.MoveRotation(Quaternion.identity);
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
 
             stateManager.ChangeState(PlayerState.Idle);
 
