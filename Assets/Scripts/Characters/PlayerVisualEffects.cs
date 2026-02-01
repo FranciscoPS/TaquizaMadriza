@@ -17,7 +17,7 @@ namespace TaquizaMadriza.Characters
 
         [Header("Parpadeo de Vida Baja")]
         [SerializeField]
-        private float lowHealthThreshold = 0.35f;
+        private float lowHealthThreshold = 0.5f;
 
         [SerializeField]
         private float lowHealthBlinkRate = 0.3f;
