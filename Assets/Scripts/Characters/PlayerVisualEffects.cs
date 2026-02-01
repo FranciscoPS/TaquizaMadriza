@@ -16,7 +16,7 @@ namespace TaquizaMadriza.Characters
         [SerializeField] private Color invulnerabilityColor = Color.white;
         
         [Header("Parpadeo de Vida Baja")]
-        [SerializeField] private float lowHealthThreshold = 0.15f; // 15%
+        [SerializeField] private float lowHealthThreshold = 0.35f; // 35% - da más tiempo para ver la advertencia
         [SerializeField] private float lowHealthBlinkRate = 0.3f;
         [SerializeField] private Color lowHealthColor = Color.red;
         
