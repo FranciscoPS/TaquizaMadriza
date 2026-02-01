@@ -1,4 +1,5 @@
 using TaquizaMadriza.Combat;
+using TaquizaMadriza.Audio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -52,6 +53,11 @@ public class WinScreen : MonoBehaviour
 
 		matchEnded = true;
 
+		if (AudioManager.Instance != null)
+		{
+			AudioManager.Instance.PlayKOVoice();
+		}
+
 		int winnerNumber = deadPlayer.PlayerNumber == 1 ? 2 : 1;
 		StartCoroutine(WinSequence(winnerNumber));
 	}
@@ -73,6 +79,16 @@ public class WinScreen : MonoBehaviour
 
 		Time.timeScale = 1f;
 		Time.fixedDeltaTime = 0.02f;
+
+		if (AudioManager.Instance != null)
+		{
+			AudioManager.Instance.PlayPlayerWinsVoice(winnerPlayer);
+		}
+
+		if (MusicManager.Instance != null)
+		{
+			MusicManager.Instance.PlayGameOverMusic();
+		}
 
 		winnerPlayerTxt.text = $"Player {winnerPlayer} Wins!!";
 		winScreenPanel.SetActive(true);
@@ -98,16 +114,28 @@ public class WinScreen : MonoBehaviour
 
 	public void ReturnMainMenu()
 	{
+		if (AudioManager.Instance != null)
+		{
+			AudioManager.Instance.PlayButtonSound();
+		}
 		SceneManager.LoadScene(0);
 	}
 
 	public void RestartMatch()
 	{
+		if (AudioManager.Instance != null)
+		{
+			AudioManager.Instance.PlayButtonSound();
+		}
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 
 	public void QuitGame()
 	{
+		if (AudioManager.Instance != null)
+		{
+			AudioManager.Instance.PlayButtonSound();
+		}
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.isPlaying = false;
 #else
