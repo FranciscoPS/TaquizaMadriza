@@ -1,5 +1,6 @@
 using System.Collections;
 using TaquizaMadriza.Characters;
+using TaquizaMadriza.Audio;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -29,6 +30,7 @@ namespace TaquizaMadriza.Combat
         private PlayerStateManager stateManager;
         private Rigidbody rb;
         private PlayerController playerController;
+        private PlayerAudioController audioController;
         private Transform punchHitbox;
         private Transform kickHitbox;
 
@@ -43,6 +45,7 @@ namespace TaquizaMadriza.Combat
         {
             stateManager = GetComponent<PlayerStateManager>();
             rb = GetComponent<Rigidbody>();
+            audioController = GetComponent<PlayerAudioController>();
             playerController = GetComponent<PlayerController>();
 
             SetupHitboxes();
@@ -186,11 +189,22 @@ namespace TaquizaMadriza.Combat
                 if (!hasUsedAirAttack)
                 {
                     PerformAirAttack(punchAttack);
+                    
+                    // Reproducir sonido de punch
+                    if (audioController != null)
+                    {
+                        audioController.PlayPunchSound();
+                    }
                 }
                 return;
             }
 
             PerformGroundAttack(punchAttack);
+
+            if (audioController != null)
+            {
+                audioController.PlayPunchSound();
+            }
         }
 
         public void Kick(InputAction.CallbackContext context)
@@ -206,12 +220,22 @@ namespace TaquizaMadriza.Combat
                 if (!hasUsedAirAttack)
                 {
                     PerformAirAttack(kickAttack);
+
+                    if (audioController != null)
+                    {
+                        audioController.PlayKickSound();
+                    }
                 }
                 return;
             }
 
             ResetCombo();
             PerformGroundAttack(kickAttack);
+
+            if (audioController != null)
+            {
+                audioController.PlayKickSound();
+            }
         }
 
         private bool CanAttack()

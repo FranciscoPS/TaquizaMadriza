@@ -1139,6 +1139,7 @@ GameObject:
   - component: {fileID: 500982170}
   - component: {fileID: 500982169}
   - component: {fileID: 500982168}
+  - component: {fileID: 500982179}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -1395,6 +1396,23 @@ Transform:
   - {fileID: 1306420516}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &500982179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500982167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f7aa58f2a66447de955a3370ea45a5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TaquizaMadriza.Audio.PlayerAudioController
+  characterSFX: {fileID: 11400000, guid: 77fc6cf55010b445696fe5fafb54e1d6, type: 2}
+  characterAudioSource: {fileID: 0}
+  voiceVolume: 1
+  attackVolume: 0.8
+  impactVolume: 0.9
 --- !u!1 &530957346
 GameObject:
   m_ObjectHideFlags: 0
@@ -1556,6 +1574,7 @@ GameObject:
   - component: {fileID: 633375795}
   - component: {fileID: 633375794}
   - component: {fileID: 633375793}
+  - component: {fileID: 633375804}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -1812,6 +1831,23 @@ Transform:
   - {fileID: 1919896994}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &633375804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633375792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f7aa58f2a66447de955a3370ea45a5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TaquizaMadriza.Audio.PlayerAudioController
+  characterSFX: {fileID: 11400000, guid: 372bea162e14c4d20b7e1b39bc29421d, type: 2}
+  characterAudioSource: {fileID: 0}
+  voiceVolume: 1
+  attackVolume: 0.8
+  impactVolume: 0.9
 --- !u!1 &635373660
 GameObject:
   m_ObjectHideFlags: 0
@@ -3518,6 +3554,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362188829}
   m_CullTransparentMesh: 1
+--- !u!1 &1344404604
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1344404606}
+  - component: {fileID: 1344404605}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1344404605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344404604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 175f8789f7e15445b9a0fca8b8ba9c98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TaquizaMadriza.Audio.AudioManager
+  generalSFX: {fileID: 11400000, guid: d503f31dc69ec4610b4916093c008733, type: 2}
+  sfxSource: {fileID: 0}
+  voiceSource: {fileID: 0}
+  uiSource: {fileID: 0}
+  sfxVolume: 1
+  voiceVolume: 1
+  uiVolume: 0.7
+--- !u!4 &1344404606
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344404604}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.12245, y: 3.66575, z: -5.17273}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1379916838
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5761,3 +5848,4 @@ SceneRoots:
   - {fileID: 1873919091}
   - {fileID: 1301247471}
   - {fileID: 1470136808}
+  - {fileID: 1344404606}

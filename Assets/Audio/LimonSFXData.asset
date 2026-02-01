@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc2ed5144f54847edbcb587cb6b4619f, type: 3}
+  m_Name: LimonSFXData
+  m_EditorClassIdentifier: Assembly-CSharp::TaquizaMadriza.Audio.CharacterSFXData
+  characterName: Character
+  characterID: 1
+  sfxDamage:
+  - {fileID: 8300000, guid: e1aab136b93de499786cf4b3ede4654a, type: 3}
+  - {fileID: 8300000, guid: 8aa4707e5b22e4b6ea0c0e7ed620bf45, type: 3}
+  sfxHeavyDamage: {fileID: 8300000, guid: 972d41ae6790644af93f0ba12f5fb959, type: 3}
+  sfxDeath: {fileID: 8300000, guid: 1a093c11bec7f4275a2a3dfda3621fbc, type: 3}
+  sfxPunch:
+  - {fileID: 8300000, guid: 48cbcf636cf504922a58786371357c0a, type: 3}
+  - {fileID: 8300000, guid: 3324cb8b5fff049dd9842b8cec7e9c45, type: 3}
+  - {fileID: 8300000, guid: 2a6463c38473d4cf783c8eec7616d1b8, type: 3}
+  sfxKick:
+  - {fileID: 8300000, guid: c78b6a56d49b24aa5ac17c2614ad929a, type: 3}
+  - {fileID: 8300000, guid: 3fb4ce99cd70f4b01be81a82639004a4, type: 3}
+  sfxHit:
+  - {fileID: 8300000, guid: 620fa477bfa9c404e9d342d969415392, type: 3}
+  - {fileID: 8300000, guid: 19fb74f36bb89454a9d5c6b21d306190, type: 3}
+  - {fileID: 8300000, guid: dc36bea05e314454fa7dd74b6e461885, type: 3}
