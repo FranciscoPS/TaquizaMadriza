@@ -5306,6 +5306,10 @@ MonoBehaviour:
   player1Health: {fileID: 500982171}
   player2Health: {fileID: 633375796}
   winDelay: 3
+  slowMotionScale: 0.25
+  pulseScaleAmount: 0.3
+  pulseSpeed: 2
+  slowMotionDuration: 3
 --- !u!1 &1951112249
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,10 +21,16 @@ public class WinScreen : MonoBehaviour
 	[SerializeField, Range(0.05f, 1f)]
 	private float slowMotionScale = 0.25f;
 
+	[Header("Winner Text Pulse")]
+	[SerializeField] private float pulseScaleAmount = 0.08f;
+	[SerializeField] private float pulseSpeed = 2f;
+
 	[SerializeField]
 	private float slowMotionDuration = 3f;
 
 	private bool matchEnded = false;
+	private Coroutine pulseCoroutine;
+	private Vector3 baseTextScale;
 
 	private void Awake()
 	{
@@ -70,6 +76,24 @@ public class WinScreen : MonoBehaviour
 
 		winnerPlayerTxt.text = $"Player {winnerPlayer} Wins!!";
 		winScreenPanel.SetActive(true);
+
+		baseTextScale = winnerPlayerTxt.transform.localScale;
+		pulseCoroutine = StartCoroutine(PulseWinnerText());
+	}
+
+	private IEnumerator PulseWinnerText()
+	{
+		float timer = 0f;
+
+		while (true)
+		{
+			timer += Time.unscaledDeltaTime * pulseSpeed;
+
+			float scaleOffset = Mathf.Sin(timer) * pulseScaleAmount;
+			winnerPlayerTxt.transform.localScale = baseTextScale * (1f + scaleOffset);
+
+			yield return null;
+		}
 	}
 
 	public void ReturnMainMenu()
