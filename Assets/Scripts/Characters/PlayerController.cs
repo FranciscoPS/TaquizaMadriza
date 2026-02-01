@@ -102,14 +102,17 @@ namespace TaquizaMadriza.Characters
             // Siempre aplicar gravedad
             ApplyGravity();
             
-            // Solo permitir movimiento y salto si puede actuar
-            if (!stateManager.CanAct())
+            // Movimiento: permitido incluso si es invulnerable, pero no en knockback
+            if (stateManager.CanMove())
             {
-                return;
+                HandleMovement();
             }
             
-            HandleMovement();
-            HandleJump();
+            // Salto: solo si puede actuar completamente (no invulnerable en knockback)
+            if (stateManager.CanAct())
+            {
+                HandleJump();
+            }
         }
         
         private void CheckGrounded()

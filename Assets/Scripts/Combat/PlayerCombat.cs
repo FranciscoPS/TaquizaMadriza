@@ -253,7 +253,7 @@ namespace TaquizaMadriza.Combat
                 if (currentComboCount >= maxComboCount)
                 {
                     attackData.appliesKnockback = true;
-                    attackData.knockbackForce = 11f;
+                    attackData.knockbackForce = 20f;
                     Debug.Log($"[Combat] Golpe {currentComboCount} - KNOCKBACK activado (fuerza: {attackData.knockbackForce})");
                 }
                 else
@@ -267,8 +267,8 @@ namespace TaquizaMadriza.Combat
             {
                 // Las patadas SIEMPRE aplican knockback
                 attackData.appliesKnockback = true;
-                attackData.knockbackForce = 8.8f;
-                Debug.Log("[Combat] Patada - KNOCKBACK activado (fuerza: 8.8)");
+                attackData.knockbackForce = 15f;
+                Debug.Log("[Combat] Patada - KNOCKBACK activado (fuerza: 15)");
             }
             
             if (attackCoroutine != null)

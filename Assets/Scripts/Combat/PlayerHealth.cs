@@ -17,7 +17,6 @@ namespace TaquizaMadriza.Combat
         [SerializeField] private int playerNumber = 1;
         
         [Header("Knockback")]
-        [SerializeField] private float knockbackDuration = 0.5f;
         [SerializeField] private float groundedDuration = 0.5f;
         [SerializeField] private float invulnerabilityDuration = 1f;
         
@@ -33,6 +32,7 @@ namespace TaquizaMadriza.Combat
         public event Action<float, float> OnHealthChanged;
         public event Action OnDeath;
         public event Action<float> OnDamageTaken;
+        public event Action<bool> OnInvulnerabilityChanged;
         
         // Estado interno
         private bool isInvulnerable = false;
@@ -107,7 +107,7 @@ namespace TaquizaMadriza.Combat
             {
                 // Agregar elevación al knockback para que se vea más dramático
                 Vector3 finalKnockback = knockbackVelocity;
-                finalKnockback.y = 4.4f; // Elevar al jugador
+                finalKnockback.y = 8f; // Elevar al jugador
                 rb.linearVelocity = finalKnockback;
                 
                 // Esperar el hitstun
@@ -165,10 +165,12 @@ namespace TaquizaMadriza.Combat
         private IEnumerator InvulnerabilityRoutine(float duration)
         {
             isInvulnerable = true;
+            OnInvulnerabilityChanged?.Invoke(true);
             
             yield return new WaitForSeconds(duration);
             
             isInvulnerable = false;
+            OnInvulnerabilityChanged?.Invoke(false);
         }
         
         private void Die()
