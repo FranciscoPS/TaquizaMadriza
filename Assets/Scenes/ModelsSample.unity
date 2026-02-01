@@ -1023,7 +1023,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TaquizaMadriza.Characters.PlayerVisualEffects
   invulnerabilityBlinkRate: 0.1
   invulnerabilityColor: {r: 1, g: 1, b: 1, a: 1}
-  lowHealthThreshold: 0.15
+  lowHealthThreshold: 0.35
   lowHealthBlinkRate: 0.3
   lowHealthColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &500982169
@@ -1303,7 +1303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TaquizaMadriza.Characters.PlayerVisualEffects
   invulnerabilityBlinkRate: 0.1
   invulnerabilityColor: {r: 1, g: 1, b: 1, a: 1}
-  lowHealthThreshold: 0.15
+  lowHealthThreshold: 0.35
   lowHealthBlinkRate: 0.3
   lowHealthColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &633375794
