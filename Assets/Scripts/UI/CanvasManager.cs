@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TaquizaMadriza.Audio;
 
 public class CanvasManager : MonoBehaviour
 {
@@ -12,13 +13,23 @@ public class CanvasManager : MonoBehaviour
 		ShowPanel(mainMenuPanel);
 	}
 
+	private void Start()
+	{
+		if (AudioManager.Instance != null)
+		{
+			AudioManager.Instance.PlayIntroVoice();
+		}
+	}
+
 	public void ShowControls()
 	{
+		PlayButtonSound();
 		ShowPanel(controlsPanel);
 	}
 
 	public void ShowMainMenu()
 	{
+		PlayButtonSound();
 		ShowPanel(mainMenuPanel);
 	}
 
@@ -26,7 +37,6 @@ public class CanvasManager : MonoBehaviour
 	{
 		if (mainMenuPanel == null || controlsPanel == null)
 		{
-			Debug.LogError("Panels no asignados en el Inspector.");
 			return;
 		}
 
@@ -35,20 +45,30 @@ public class CanvasManager : MonoBehaviour
 
 		panelToShow.SetActive(true);
 	}
+	
 	public void LoadNextScene()
 	{
+		PlayButtonSound();
 		int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 		SceneManager.LoadScene(currentSceneIndex + 1);
 	}
 
 	public void QuitGame()
 	{
-		Debug.Log("Quit application");
+		PlayButtonSound();
 
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
 #endif
+	}
+	
+	private void PlayButtonSound()
+	{
+		if (AudioManager.Instance != null)
+		{
+			AudioManager.Instance.PlayButtonSound();
+		}
 	}
 }

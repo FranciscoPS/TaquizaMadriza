@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84bbf46956a3d47b38aa656f0ceb923c, type: 3}
+  m_Name: MusicData
+  m_EditorClassIdentifier: Assembly-CSharp::TaquizaMadriza.Audio.MusicData
+  menuInicio: {fileID: 8300000, guid: b294f33edd7034448b32d401882ecec2, type: 3}
+  menuModo: {fileID: 8300000, guid: 1e34c821a6d1c4eaaa70b12e6c5dc764, type: 3}
+  menuPersonajes: {fileID: 8300000, guid: 17ff6bb622e484e7792b701d5b5e65c6, type: 3}
+  luchaM: {fileID: 8300000, guid: 4cb60f0378330493c8e58877ab67c89f, type: 3}
+  gameOver: {fileID: 8300000, guid: 1d500145f7c594017bef7c143b088caa, type: 3}
+  creditos: {fileID: 8300000, guid: d4cfb0bd27396430d90082a0cee0bcc7, type: 3}
