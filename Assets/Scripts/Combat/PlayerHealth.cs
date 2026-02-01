@@ -18,7 +18,7 @@ namespace TaquizaMadriza.Combat
         
         [Header("Knockback")]
         [SerializeField] private float knockbackDuration = 0.5f;
-        [SerializeField] private float groundedDuration = 1f;
+        [SerializeField] private float groundedDuration = 0.5f;
         [SerializeField] private float invulnerabilityDuration = 1f;
         
         // Referencias (auto-asignadas)
@@ -61,11 +61,14 @@ namespace TaquizaMadriza.Combat
         /// <summary>
         /// Aplica daño al jugador
         /// </summary>
-        public void TakeDamage(float damage, Vector3 knockbackVelocity, float hitstunDuration)
+        public void TakeDamage(float damage, Vector3 knockbackVelocity, float hitstunDuration, bool applyKnockback = true)
         {
+            Debug.Log($"[Health] Jugador {playerNumber} recibe daño: {damage}, Knockback: {applyKnockback}, Velocidad: {knockbackVelocity.magnitude}");
+            
             // No recibir daño si está invulnerable o muerto
             if (isInvulnerable || stateManager.CurrentState == PlayerState.Dead)
             {
+                Debug.Log($"[Health] Jugador {playerNumber} ignora daño - invulnerable: {isInvulnerable}, muerto: {stateManager.CurrentState == PlayerState.Dead}");
                 return;
             }
             
@@ -84,41 +87,68 @@ namespace TaquizaMadriza.Combat
                 return;
             }
             
-            // Aplicar knockback y hitstun
-            StartCoroutine(HitstunRoutine(knockbackVelocity, hitstunDuration));
+            // Aplicar knockback y hitstun (o solo hitstun)
+            StartCoroutine(HitstunRoutine(applyKnockback ? knockbackVelocity : Vector3.zero, hitstunDuration));
         }
         
         private IEnumerator HitstunRoutine(Vector3 knockbackVelocity, float hitstunDuration)
         {
+            // Asegurar que el Rigidbody no sea kinematic
+            if (rb.isKinematic)
+            {
+                rb.isKinematic = false;
+            }
+            
             // Cambiar a estado Hit
             stateManager.ChangeState(PlayerState.Hit);
             
-            // Aplicar knockback
-            rb.linearVelocity = new Vector3(knockbackVelocity.x, rb.linearVelocity.y, knockbackVelocity.z);
+            // Aplicar knockback si hay
+            if (knockbackVelocity.sqrMagnitude > 0.01f)
+            {
+                // Agregar elevación al knockback para que se vea más dramático
+                Vector3 finalKnockback = knockbackVelocity;
+                finalKnockback.y = 4f; // Elevar al jugador
+                rb.linearVelocity = finalKnockback;
+                
+                // Esperar el hitstun
+                yield return new WaitForSeconds(hitstunDuration);
+                
+                // Cambiar a knockback (siendo empujado, la gravedad lo hará caer)
+                stateManager.ChangeState(PlayerState.Knockback);
+                
+                // Esperar hasta que toque el suelo (la gravedad ya está actuando)
+                float airTime = 0f;
+                float maxAirTime = 2f;
+                while (!Physics.Raycast(transform.position, Vector3.down, 1.2f) && airTime < maxAirTime)
+                {
+                    airTime += Time.deltaTime;
+                    yield return null;
+                }
+                
+                // Caer al suelo
+                stateManager.ChangeState(PlayerState.Grounded);
+                rb.linearVelocity = Vector3.zero;
+                
+                // Esperar en el suelo
+                yield return new WaitForSeconds(groundedDuration);
+                
+                // Levantarse con invulnerabilidad
+                stateManager.ChangeState(PlayerState.GettingUp);
+                StartInvulnerability(invulnerabilityDuration);
+                
+                // Después de levantarse, volver a idle
+                yield return new WaitForSeconds(0.5f);
+            }
+            else
+            {
+                // Solo hitstun, sin knockback (golpes 1 y 2)
+                rb.linearVelocity = Vector3.zero; // Congelar al jugador
+                
+                // Esperar el hitstun
+                yield return new WaitForSeconds(hitstunDuration);
+            }
             
-            // Esperar el hitstun
-            yield return new WaitForSeconds(hitstunDuration);
-            
-            // Cambiar a knockback (siendo empujado)
-            stateManager.ChangeState(PlayerState.Knockback);
-            
-            // Esperar a que termine el knockback
-            yield return new WaitForSeconds(knockbackDuration);
-            
-            // Caer al suelo
-            stateManager.ChangeState(PlayerState.Grounded);
-            
-            // Esperar en el suelo
-            yield return new WaitForSeconds(groundedDuration);
-            
-            // Levantarse con invulnerabilidad
-            stateManager.ChangeState(PlayerState.GettingUp);
-            StartInvulnerability(invulnerabilityDuration);
-            
-            // Después de levantarse, volver a idle
-            yield return new WaitForSeconds(0.5f);
-            
-            if (stateManager.CurrentState == PlayerState.GettingUp)
+            if (stateManager.CurrentState == PlayerState.GettingUp || stateManager.CurrentState == PlayerState.Hit)
             {
                 stateManager.ChangeState(PlayerState.Idle);
             }
@@ -143,6 +173,12 @@ namespace TaquizaMadriza.Combat
         
         private void Die()
         {
+            // Asegurar que el Rigidbody no sea kinematic
+            if (rb.isKinematic)
+            {
+                rb.isKinematic = false;
+            }
+            
             stateManager.ChangeState(PlayerState.Dead);
             OnDeath?.Invoke();
             

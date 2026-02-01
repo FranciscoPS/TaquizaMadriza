@@ -22,7 +22,6 @@ namespace TaquizaMadriza.Characters
         [SerializeField] private float maxFallSpeed = -15f;
         
         [Header("Detección de Suelo")]
-        [SerializeField] private float groundCheckRadius = 0.2f;
         [SerializeField] private float groundCheckDistance = 1.2f;
         
         [Header("Configuración")]
@@ -38,6 +37,7 @@ namespace TaquizaMadriza.Characters
         private Vector2 moveInput;
         private bool isGrounded;
         private bool jumpRequested;
+        private int facingDirection = 1;
         
         private void Awake()
         {
@@ -99,6 +99,10 @@ namespace TaquizaMadriza.Characters
         
         private void FixedUpdate()
         {
+            // Siempre aplicar gravedad
+            ApplyGravity();
+            
+            // Solo permitir movimiento y salto si puede actuar
             if (!stateManager.CanAct())
             {
                 return;
@@ -106,7 +110,6 @@ namespace TaquizaMadriza.Characters
             
             HandleMovement();
             HandleJump();
-            ApplyGravity();
         }
         
         private void CheckGrounded()
@@ -151,6 +154,13 @@ namespace TaquizaMadriza.Characters
             
             if (moveDirection.sqrMagnitude > 0.01f)
             {
+                // Actualizar dirección horizontal: usar el componente X del moveDirection en mundo
+                // Esto asegura que la dirección se base en el movimiento real, no solo en input
+                if (Mathf.Abs(moveDirection.x) > 0.2f)
+                {
+                    facingDirection = moveDirection.x > 0 ? 1 : -1;
+                }
+                
                 Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
                 transform.rotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
             }
@@ -196,6 +206,11 @@ namespace TaquizaMadriza.Characters
             {
                 jumpRequested = true;
             }
+        }
+        
+        public int GetFacingDirection()
+        {
+            return facingDirection;
         }
         
         private void OnDrawGizmosSelected()

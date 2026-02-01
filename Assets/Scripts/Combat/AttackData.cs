@@ -11,14 +11,14 @@ namespace TaquizaMadriza.Combat
         [Header("Configuración del Ataque")]
         public string attackName = "Ataque";
         public float damage = 10f;
-        public float hitboxDuration = 0.2f;      // Cuánto tiempo está activa la hitbox
-        public float attackCooldown = 0.3f;       // Tiempo antes de poder atacar de nuevo
-        public float knockbackForce = 5f;         // Fuerza del empuje
+        public float hitboxDuration = 0.2f;
+        public float attackCooldown = 0.3f;
+        public float knockbackForce = 5f;
         
         [Header("Hitstun")]
-        public float hitstunDuration = 0.3f;      // Tiempo que el enemigo queda en hitstun
+        public float hitstunDuration = 0.3f;
         
-        [Header("Referencias")]
-        public GameObject hitboxObject;           // Referencia al GameObject de la hitbox
+        [HideInInspector]
+        public bool appliesKnockback = false;
     }
 }

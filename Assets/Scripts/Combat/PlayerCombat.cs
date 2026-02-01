@@ -16,8 +16,12 @@ namespace TaquizaMadriza.Combat
         [SerializeField] private int maxComboCount = 3;
         [SerializeField] private float comboResetTime = 0.5f;
         
+        [Header("Debug")]
+        [SerializeField] private bool showHitboxes = true;
+        
         private PlayerStateManager stateManager;
         private Rigidbody rb;
+        private PlayerController playerController;
         private Transform punchHitbox;
         private Transform kickHitbox;
         
@@ -32,6 +36,7 @@ namespace TaquizaMadriza.Combat
         {
             stateManager = GetComponent<PlayerStateManager>();
             rb = GetComponent<Rigidbody>();
+            playerController = GetComponent<PlayerController>();
             
             // Buscar o crear hitboxes
             SetupHitboxes();
@@ -63,14 +68,36 @@ namespace TaquizaMadriza.Combat
                 GameObject punch = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 punch.name = "PunchHitbox";
                 punch.transform.SetParent(transform);
-                punch.transform.localPosition = new Vector3(0.8f, 0, 0);
+                punch.transform.localPosition = Vector3.zero;
+                punch.transform.localRotation = Quaternion.identity;
                 punch.transform.localScale = new Vector3(0.6f, 0.8f, 0.6f);
                 punch.layer = LayerMask.NameToLayer("Hitbox");
                 
                 var collider = punch.GetComponent<BoxCollider>();
                 collider.isTrigger = true;
                 
-                Destroy(punch.GetComponent<MeshRenderer>());
+                // Solo destruir MeshRenderer si no se debe mostrar
+                if (!showHitboxes)
+                {
+                    Destroy(punch.GetComponent<MeshRenderer>());
+                }
+                else
+                {
+                    // Hacer semi-transparente para debug
+                    var renderer = punch.GetComponent<MeshRenderer>();
+                    var mat = new Material(Shader.Find("Standard"));
+                    mat.color = new Color(1f, 0f, 0f, 0.3f);
+                    mat.SetFloat("_Mode", 3); // Transparent
+                    mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                    mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                    mat.SetInt("_ZWrite", 0);
+                    mat.DisableKeyword("_ALPHATEST_ON");
+                    mat.EnableKeyword("_ALPHABLEND_ON");
+                    mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+                    mat.renderQueue = 3000;
+                    renderer.material = mat;
+                }
+                
                 punch.AddComponent<Hitbox>();
                 punch.SetActive(false);
                 
@@ -83,23 +110,41 @@ namespace TaquizaMadriza.Combat
                 GameObject kick = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 kick.name = "KickHitbox";
                 kick.transform.SetParent(transform);
-                kick.transform.localPosition = new Vector3(1.0f, -0.3f, 0);
-                kick.transform.localScale = new Vector3(0.8f, 0.6f, 0.6f);
+                kick.transform.localPosition = Vector3.zero;
+                kick.transform.localRotation = Quaternion.identity;
+                kick.transform.localScale = new Vector3(0.8f, 0.6f, 0.8f);
                 kick.layer = LayerMask.NameToLayer("Hitbox");
                 
                 var collider = kick.GetComponent<BoxCollider>();
                 collider.isTrigger = true;
                 
-                Destroy(kick.GetComponent<MeshRenderer>());
+                // Solo destruir MeshRenderer si no se debe mostrar
+                if (!showHitboxes)
+                {
+                    Destroy(kick.GetComponent<MeshRenderer>());
+                }
+                else
+                {
+                    // Hacer semi-transparente para debug
+                    var renderer = kick.GetComponent<MeshRenderer>();
+                    var mat = new Material(Shader.Find("Standard"));
+                    mat.color = new Color(0f, 0f, 1f, 0.3f);
+                    mat.SetFloat("_Mode", 3);
+                    mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                    mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                    mat.SetInt("_ZWrite", 0);
+                    mat.DisableKeyword("_ALPHATEST_ON");
+                    mat.EnableKeyword("_ALPHABLEND_ON");
+                    mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+                    mat.renderQueue = 3000;
+                    renderer.material = mat;
+                }
+                
                 kick.AddComponent<Hitbox>();
                 kick.SetActive(false);
                 
                 kickHitbox = kick.transform;
             }
-            
-            // Asignar hitboxes a los attack data
-            punchAttack.hitboxObject = punchHitbox.gameObject;
-            kickAttack.hitboxObject = kickHitbox.gameObject;
             
             // Configurar valores por defecto si no están configurados
             if (punchAttack.damage == 0)
@@ -193,16 +238,37 @@ namespace TaquizaMadriza.Combat
         
         private void PerformGroundAttack(AttackData attackData)
         {
-            // Incrementar combo solo para golpes
+            if (Time.time - lastAttackTime > comboResetTime)
+            {
+                currentComboCount = 0;
+            }
+            
+            // Configurar knockback según tipo de ataque y combo
             if (attackData == punchAttack)
             {
                 currentComboCount++;
                 
-                // Si alcanzó el máximo de combo, el siguiente golpe manda a volar
+                // Golpes 1 y 2: solo hitstun (congelar)
+                // Golpe 3: knockback fuerte
                 if (currentComboCount >= maxComboCount)
                 {
-                    attackData.knockbackForce *= 2f; // Doble knockback en el tercer golpe
+                    attackData.appliesKnockback = true;
+                    attackData.knockbackForce = 10f;
+                    Debug.Log($"[Combat] Golpe {currentComboCount} - KNOCKBACK activado (fuerza: {attackData.knockbackForce})");
                 }
+                else
+                {
+                    attackData.appliesKnockback = false;
+                    attackData.knockbackForce = 0f;
+                    Debug.Log($"[Combat] Golpe {currentComboCount} - Solo hitstun");
+                }
+            }
+            else if (attackData == kickAttack)
+            {
+                // Las patadas SIEMPRE aplican knockback
+                attackData.appliesKnockback = true;
+                attackData.knockbackForce = 8f;
+                Debug.Log("[Combat] Patada - KNOCKBACK activado (fuerza: 8)");
             }
             
             if (attackCoroutine != null)
@@ -227,12 +293,27 @@ namespace TaquizaMadriza.Combat
             stateManager.ChangeState(PlayerState.Attacking);
             lastAttackTime = Time.time;
             
-            // Activar hitbox
-            if (attackData.hitboxObject != null)
+            // Determinar qué hitbox usar según el tipo de ataque
+            Transform hitboxToUse = (attackData == punchAttack) ? punchHitbox : kickHitbox;
+            
+            if (hitboxToUse != null)
             {
-                var hitbox = attackData.hitboxObject.GetComponent<Hitbox>();
+                var hitbox = hitboxToUse.GetComponent<Hitbox>();
                 if (hitbox != null)
                 {
+                    // Determinar distancia según tipo de ataque
+                    float distance = (attackData == punchAttack) ? 0.8f : 1.0f;
+                    float heightOffset = (attackData == punchAttack) ? 0f : -0.3f;
+                    
+                    // BEAT'EM UP: Hitbox sale según dirección horizontal del personaje
+                    int facingDir = playerController.GetFacingDirection();
+                    Vector3 direction = facingDir > 0 ? Vector3.right : Vector3.left;
+                    
+                    // Posicionar hitbox en eje X mundial según dirección
+                    hitboxToUse.position = transform.position + direction * distance + Vector3.up * heightOffset;
+                    
+                    Debug.Log($"[Combat] Hitbox posicionado hacia {(facingDir > 0 ? "DERECHA" : "IZQUIERDA")} (facingDir: {facingDir})");
+                    
                     hitbox.ActivateHitbox(attackData);
                 }
             }
