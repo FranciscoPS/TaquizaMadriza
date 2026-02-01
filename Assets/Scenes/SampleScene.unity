@@ -1239,6 +1239,7 @@ GameObject:
   - component: {fileID: 969459067}
   - component: {fileID: 969459066}
   - component: {fileID: 969459065}
+  - component: {fileID: 969459075}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -1430,7 +1431,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 472c4311015ee4f43a3846d59edd3197, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1478,6 +1479,23 @@ Transform:
   - {fileID: 587909764}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &969459075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969459064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a83ef8c673c7c4e3881232879384d5e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TaquizaMadriza.Characters.PlayerVisualEffects
+  invulnerabilityBlinkRate: 0.1
+  invulnerabilityColor: {r: 1, g: 1, b: 1, a: 1}
+  lowHealthThreshold: 0.15
+  lowHealthBlinkRate: 0.3
+  lowHealthColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1392466415
 GameObject:
   m_ObjectHideFlags: 0
@@ -1936,6 +1954,7 @@ GameObject:
   - component: {fileID: 2144023067}
   - component: {fileID: 2144023066}
   - component: {fileID: 2144023065}
+  - component: {fileID: 2144023070}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -2018,7 +2037,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 17d9c0943774a47208500ee92b871d1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2175,6 +2194,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TaquizaMadriza.Characters.PlayerStateManager
   currentState: 0
+--- !u!114 &2144023070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2144023054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a83ef8c673c7c4e3881232879384d5e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TaquizaMadriza.Characters.PlayerVisualEffects
+  invulnerabilityBlinkRate: 0.1
+  invulnerabilityColor: {r: 1, g: 1, b: 1, a: 1}
+  lowHealthThreshold: 0.15
+  lowHealthBlinkRate: 0.3
+  lowHealthColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
