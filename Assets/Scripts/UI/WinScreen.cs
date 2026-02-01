@@ -1,51 +1,72 @@
+using TaquizaMadriza.Combat;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class WinScreen : MonoBehaviour
 {
-	[SerializeField] GameObject winScreenPanel;
+	[Header("UI")]
+	[SerializeField] private GameObject winScreenPanel;
+	[SerializeField] private TextMeshProUGUI winnerPlayerTxt;
+
+	[Header("Players")]
+	[SerializeField] private PlayerHealth player1Health;
+	[SerializeField] private PlayerHealth player2Health;
+
+	[Header("Settings")]
+	[SerializeField] private float winDelay = 3f;
+
+	private bool matchEnded = false;
+
+	private void Awake()
+	{
+		winScreenPanel.SetActive(false);
+
+		player1Health.OnDeath += () => OnPlayerDied(player1Health);
+		player2Health.OnDeath += () => OnPlayerDied(player2Health);
+	}
+
+	private void OnDestroy()
+	{
+		player1Health.OnDeath -= () => OnPlayerDied(player1Health);
+		player2Health.OnDeath -= () => OnPlayerDied(player2Health);
+	}
+
+	private void OnPlayerDied(PlayerHealth deadPlayer)
+	{
+		if (matchEnded) return;
+
+		matchEnded = true;
+
+		int winnerNumber = deadPlayer.PlayerNumber == 1 ? 2 : 1;
+		StartCoroutine(ShowWinScreenAfterDelay(winnerNumber));
+	}
+
+	private IEnumerator ShowWinScreenAfterDelay(int winnerPlayer)
+	{
+		yield return new WaitForSeconds(winDelay);
+
+		winnerPlayerTxt.text = $"Player {winnerPlayer} Wins!!";
+		winScreenPanel.SetActive(true);
+	}
 
 	public void ReturnMainMenu()
 	{
-		HideWinPanel();
+		SceneManager.LoadScene(0);
+	}
 
-		int currentIndex = SceneManager.GetActiveScene().buildIndex;
-		int previousIndex = currentIndex - 1;
-
-		if (previousIndex >= 0 && previousIndex < SceneManager.sceneCountInBuildSettings)
-		{
-			SceneManager.LoadScene(previousIndex);
-		}
-		else
-		{
-			Debug.LogWarning("No hay escena anterior válida en Build Settings. Cargando escena 0.");
-			SceneManager.LoadScene(0);
-		}
+	public void RestartMatch()
+	{
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 
 	public void QuitGame()
 	{
-		HideWinPanel();
-
-		Debug.Log("Quit application");
-
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
 #endif
-	}
-
-	public void RestartMatch()
-	{
-		HideWinPanel();
-		int currentIndex = SceneManager.GetActiveScene().buildIndex;
-		SceneManager.LoadScene(currentIndex);
-	}
-
-	private void HideWinPanel()
-	{
-		if (winScreenPanel != null && winScreenPanel.activeSelf)
-			winScreenPanel.SetActive(false);
 	}
 }
