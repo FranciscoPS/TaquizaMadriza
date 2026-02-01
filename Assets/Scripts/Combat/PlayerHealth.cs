@@ -107,7 +107,7 @@ namespace TaquizaMadriza.Combat
             {
                 // Agregar elevación al knockback para que se vea más dramático
                 Vector3 finalKnockback = knockbackVelocity;
-                finalKnockback.y = 4f; // Elevar al jugador
+                finalKnockback.y = 4.4f; // Elevar al jugador
                 rb.linearVelocity = finalKnockback;
                 
                 // Esperar el hitstun
