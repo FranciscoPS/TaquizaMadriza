@@ -1624,7 +1624,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TaquizaMadriza.Audio.MusicManager
   musicData: {fileID: 11400000, guid: 37519dbda6e50482b9f9e59e9f68d60b, type: 2}
   musicSource: {fileID: 0}
-  musicVolume: 1
+  musicVolume: 0.2
 --- !u!4 &1389259277
 Transform:
   m_ObjectHideFlags: 0
