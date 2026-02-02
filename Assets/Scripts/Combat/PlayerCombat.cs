@@ -31,6 +31,7 @@ namespace TaquizaMadriza.Combat
         private Rigidbody rb;
         private PlayerController playerController;
         private PlayerAudioController audioController;
+        private PlayerAnimationController animationController;
         private Transform punchHitbox;
         private Transform kickHitbox;
 
@@ -48,6 +49,7 @@ namespace TaquizaMadriza.Combat
             rb = GetComponent<Rigidbody>();
             audioController = GetComponent<PlayerAudioController>();
             playerController = GetComponent<PlayerController>();
+            animationController = GetComponent<PlayerAnimationController>();
 
             SetupHitboxes();
         }
@@ -205,6 +207,11 @@ namespace TaquizaMadriza.Combat
 
             PerformGroundAttack(punchAttack);
 
+            if (animationController != null)
+            {
+                animationController.TriggerPunchAnimation();
+            }
+
             if (audioController != null)
             {
                 audioController.PlayPunchSound();
@@ -238,6 +245,11 @@ namespace TaquizaMadriza.Combat
 
             ResetCombo();
             PerformGroundAttack(kickAttack);
+
+            if (animationController != null)
+            {
+                animationController.TriggerKickAnimation();
+            }
 
             if (audioController != null)
             {

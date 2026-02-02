@@ -27,8 +27,7 @@ namespace TaquizaMadriza.Characters
 
         private PlayerHealth health;
         private List<MeshRenderer> playerRenderers = new List<MeshRenderer>();
-        private Dictionary<MeshRenderer, Color> originalColors =
-            new Dictionary<MeshRenderer, Color>();
+        private Dictionary<MeshRenderer, Color> originalColors = new Dictionary<MeshRenderer, Color>();
 
         private Coroutine invulnerabilityBlinkCoroutine;
         private Coroutine lowHealthBlinkCoroutine;

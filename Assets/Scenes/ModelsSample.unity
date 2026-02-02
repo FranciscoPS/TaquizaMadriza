@@ -1139,6 +1139,7 @@ GameObject:
   - component: {fileID: 500982169}
   - component: {fileID: 500982168}
   - component: {fileID: 500982176}
+  - component: {fileID: 500982183}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -1404,6 +1405,18 @@ Transform:
   - {fileID: 1306420516}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &500982183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500982167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6921009e4cbbf5046a4f51673fdbf7d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TaquizaMadriza.Characters.PlayerAnimationController
 --- !u!1 &530957346
 GameObject:
   m_ObjectHideFlags: 0
@@ -1566,6 +1579,7 @@ GameObject:
   - component: {fileID: 633375794}
   - component: {fileID: 633375793}
   - component: {fileID: 633375804}
+  - component: {fileID: 633375805}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -1839,6 +1853,18 @@ MonoBehaviour:
   voiceVolume: 1
   attackVolume: 0.8
   impactVolume: 0.9
+--- !u!114 &633375805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633375792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6921009e4cbbf5046a4f51673fdbf7d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TaquizaMadriza.Characters.PlayerAnimationController
 --- !u!1 &635373660
 GameObject:
   m_ObjectHideFlags: 0
@@ -5251,6 +5277,7 @@ GameObject:
   - component: {fileID: 1919896994}
   - component: {fileID: 1919896996}
   - component: {fileID: 1919896995}
+  - component: {fileID: 1919896997}
   m_Layer: 0
   m_Name: VisualContainer
   m_TagString: Untagged
@@ -5349,6 +5376,28 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!95 &1919896997
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919896993}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 41b0e760a027944499c2674432e1abeb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1946852050
 GameObject:
   m_ObjectHideFlags: 0
