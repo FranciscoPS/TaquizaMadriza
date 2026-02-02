@@ -59,6 +59,8 @@ namespace TaquizaMadriza.Characters
             if (previousState == newState)
                 return;
 
+            Debug.Log($"[AnimController] {gameObject.name}: {previousState} -> {newState}");
+
             // Desactivar el estado anterior
             switch (previousState)
             {
