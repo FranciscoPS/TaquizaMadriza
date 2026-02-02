@@ -33,7 +33,6 @@ namespace TaquizaMadriza.Utils
             initialRotation = transform.rotation;
             initialScale = transform.localScale;
             
-            // Buscar el PlayerController en el padre
             playerController = GetComponentInParent<PlayerController>();
         }
 
@@ -59,7 +58,6 @@ namespace TaquizaMadriza.Utils
                 transform.rotation = Quaternion.Euler(euler);
             }
 
-            // Flip del sprite basado en la dirección del jugador
             if (flipSpriteWithMovement && playerController != null)
             {
                 int facingDir = playerController.GetFacingDirection();

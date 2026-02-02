@@ -103,10 +103,10 @@ namespace TaquizaMadriza.Combat
                 rb.isKinematic = false;
             }
 
-            stateManager.ChangeState(PlayerState.Hit);
-
             if (knockbackVelocity.sqrMagnitude > 0.01f)
             {
+                stateManager.ChangeState(PlayerState.Knockback);
+
                 Vector3 finalKnockback = knockbackVelocity;
                 finalKnockback.y = 8f;
                 rb.linearVelocity = finalKnockback;
@@ -142,6 +142,7 @@ namespace TaquizaMadriza.Combat
             }
             else
             {
+                stateManager.ChangeState(PlayerState.Hit);
                 rb.linearVelocity = Vector3.zero;
 
                 yield return new WaitForSeconds(hitstunDuration);

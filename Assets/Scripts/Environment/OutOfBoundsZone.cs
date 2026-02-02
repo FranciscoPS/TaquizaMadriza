@@ -39,13 +39,11 @@ namespace TaquizaMadriza.Environment
             if (playerHealth == null)
                 return;
 
-            // Si el jugador ya está muerto, no hacer nada (el GameManager manejará la muerte)
             if (playerHealth.IsDead())
                 return;
 
             playerHealth.TakeDamageFromEnvironment(outOfBoundsDamage);
 
-            // Solo respawnear si aún tiene vida después del daño
             if (!playerHealth.IsDead())
             {
                 Vector3 spawnPos = respawnPoint != null ? respawnPoint.position : respawnPosition;

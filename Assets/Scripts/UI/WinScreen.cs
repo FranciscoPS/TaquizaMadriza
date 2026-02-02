@@ -11,11 +11,6 @@ public class WinScreen : MonoBehaviour
 	[SerializeField] private GameObject winScreenPanel;
 	[SerializeField] private TextMeshProUGUI winnerPlayerTxt;
 
-	[Header("Credits")]
-	[SerializeField] private GameObject creditsPanel;
-	[SerializeField] private AudioClip creditsMusicClip;
-    [SerializeField] private float creditsDelay = 6f;
-
     [Header("Players")]
 	[SerializeField] private PlayerHealth player1Health;
 	[SerializeField] private PlayerHealth player2Health;
@@ -37,8 +32,6 @@ public class WinScreen : MonoBehaviour
 	private bool matchEnded = false;
 	private Coroutine pulseCoroutine;
 	private Vector3 baseTextScale;
-    private Coroutine creditsCoroutine;
-    private bool creditsShown = false;
 
     private void Awake()
 	{
@@ -102,17 +95,9 @@ public class WinScreen : MonoBehaviour
 
         baseTextScale = winnerPlayerTxt.transform.localScale;
         pulseCoroutine = StartCoroutine(PulseWinnerText());
-
-        creditsCoroutine = StartCoroutine(AutoShowCredits());
     }
     private void HideWinPanel()
     {
-        if (creditsCoroutine != null)
-        {
-            StopCoroutine(creditsCoroutine);
-            creditsCoroutine = null;
-        }
-
         if (pulseCoroutine != null)
         {
             StopCoroutine(pulseCoroutine);
@@ -139,27 +124,6 @@ public class WinScreen : MonoBehaviour
 			yield return null;
 		}
 	}
-
-    private IEnumerator AutoShowCredits()
-    {
-        yield return new WaitForSecondsRealtime(creditsDelay);
-
-        ShowCredits();
-    }
-
-    public void ShowCredits()
-    {
-        if (creditsShown) return;
-
-        creditsShown = true;
-
-        creditsPanel.SetActive(true);
-
-        if (creditsMusicClip != null && MusicManager.Instance != null)
-        {
-            MusicManager.Instance.PlayMusic(creditsMusicClip, true);
-        }
-    }
 
     public void ReturnMainMenu()
 	{
