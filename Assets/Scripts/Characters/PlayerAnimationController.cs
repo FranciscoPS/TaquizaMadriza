@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace TaquizaMadriza.Characters
@@ -7,15 +8,15 @@ namespace TaquizaMadriza.Characters
     {
         private Animator animator;
         private PlayerStateManager stateManager;
+        private Coroutine freezeAnimationCoroutine;
         private PlayerController controller;
 
         private static readonly int IsWalkingHash = Animator.StringToHash("IsWalking");
         private static readonly int IsIdleHash = Animator.StringToHash("IsIdle");
         private static readonly int KickTriggerHash = Animator.StringToHash("Kick");
         private static readonly int PunchTriggerHash = Animator.StringToHash("Punch");
-        private static readonly int IsGroundedHash = Animator.StringToHash("IsGrounded");
-        private static readonly int IsHitHash = Animator.StringToHash("IsHit");
-        private static readonly int IsDeadHash = Animator.StringToHash("IsDead");
+        private static readonly int DamageTriggerHash = Animator.StringToHash("Damage");
+        private static readonly int IsDownedHash = Animator.StringToHash("IsDowned");
 
         private void Awake()
         {
@@ -52,35 +53,63 @@ namespace TaquizaMadriza.Characters
             if (animator == null)
                 return;
 
-            // Solo actualizar cuando el estado realmente cambia
             if (previousState == newState)
                 return;
 
             switch (previousState)
             {
                 case PlayerState.Idle:
-                case PlayerState.Grounded:
                     animator.SetBool(IsIdleHash, false);
                     break;
 
                 case PlayerState.Moving:
                     animator.SetBool(IsWalkingHash, false);
                     break;
+
+                case PlayerState.Knockback:
+                case PlayerState.Grounded:
+                    animator.SetBool(IsDownedHash, false);
+                    break;
             }
 
             switch (newState)
             {
                 case PlayerState.Idle:
-                case PlayerState.Grounded:
                     animator.SetBool(IsIdleHash, true);
+                    animator.speed = 1f;
                     break;
 
                 case PlayerState.Moving:
                     animator.SetBool(IsWalkingHash, true);
+                    animator.speed = 1f;
+                    break;
+
+                case PlayerState.Hit:
+                    animator.SetTrigger(DamageTriggerHash);
+                    animator.speed = 1f;
+                    break;
+
+                case PlayerState.Knockback:
+                    animator.SetBool(IsDownedHash, true);
+                    animator.speed = 1f;
+                    break;
+
+                case PlayerState.Grounded:
+                    if (freezeAnimationCoroutine != null)
+                        StopCoroutine(freezeAnimationCoroutine);
+                    freezeAnimationCoroutine = StartCoroutine(FreezeDownedAnimation());
+                    break;
+
+                case PlayerState.GettingUp:
+                    if (freezeAnimationCoroutine != null)
+                    {
+                        StopCoroutine(freezeAnimationCoroutine);
+                        freezeAnimationCoroutine = null;
+                    }
+                    animator.speed = 1f;
                     break;
 
                 case PlayerState.Attacking:
-                case PlayerState.Hit:
                 case PlayerState.Dead:
                     break;
             }
@@ -100,6 +129,21 @@ namespace TaquizaMadriza.Characters
             {
                 animator.SetTrigger(KickTriggerHash);
             }
+        }
+
+        private IEnumerator FreezeDownedAnimation()
+        {
+            yield return null;
+            
+            while (!animator.GetCurrentAnimatorStateInfo(0).IsName("Downed"))
+            {
+                yield return null;
+            }
+            
+            yield return new WaitForSeconds(0.1f);
+            
+            animator.Play("Downed", -1, 0.99f);
+            animator.speed = 0f;
         }
     }
 }
