@@ -25,6 +25,13 @@ namespace TaquizaMadriza.Characters
         [SerializeField]
         private Color lowHealthColor = Color.red;
 
+        [Header("Diferenciación de Jugadores")]
+        [SerializeField]
+        private bool applyPlayerColorTint = true;
+
+        [SerializeField]
+        private Color playerTint = Color.white; // Tint de este jugador específico
+
         private PlayerHealth health;
         private List<Renderer> playerRenderers = new List<Renderer>();
         private Dictionary<Renderer, Color> originalColors =
@@ -69,6 +76,12 @@ namespace TaquizaMadriza.Characters
                     originalColors[renderer] = renderer.color;
                 }
             }
+
+            // Aplicar tint de color según el jugador
+            if (applyPlayerColorTint)
+            {
+                ApplyPlayerTint();
+            }
         }
 
         private void Start()
@@ -100,7 +113,7 @@ namespace TaquizaMadriza.Characters
             else
             {
                 StopInvulnerabilityBlink();
-                
+
                 // Restaurar parpadeo de vida baja si corresponde
                 float healthPercentage = health.CurrentHealth / health.MaxHealth;
                 if (healthPercentage <= lowHealthThreshold && healthPercentage > 0)
@@ -218,6 +231,36 @@ namespace TaquizaMadriza.Characters
                 {
                     spriteRenderer.color = kvp.Value;
                 }
+            }
+        }
+
+        private void ApplyPlayerTint()
+        {
+            // Crear lista temporal para evitar modificar el diccionario durante la iteración
+            List<KeyValuePair<Renderer, Color>> updates = new List<KeyValuePair<Renderer, Color>>();
+
+            foreach (var kvp in originalColors)
+            {
+                if (kvp.Key == null)
+                    continue;
+
+                Color newColor = kvp.Value * playerTint;
+                updates.Add(new KeyValuePair<Renderer, Color>(kvp.Key, newColor));
+
+                if (kvp.Key is MeshRenderer meshRenderer && meshRenderer.material != null)
+                {
+                    meshRenderer.material.color = newColor;
+                }
+                else if (kvp.Key is SpriteRenderer spriteRenderer)
+                {
+                    spriteRenderer.color = newColor;
+                }
+            }
+
+            // Actualizar el diccionario con los nuevos colores
+            foreach (var update in updates)
+            {
+                originalColors[update.Key] = update.Value;
             }
         }
     }
