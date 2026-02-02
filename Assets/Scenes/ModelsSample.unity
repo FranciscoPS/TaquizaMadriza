@@ -5250,8 +5250,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TaquizaMadriza.UI.GameUIManager
   player1HealthBar: {fileID: 1020129503}
   player2HealthBar: {fileID: 1783107409}
-  player1Icon: {fileID: 21300000, guid: 71279614b48dd4f33939238e397fb75b, type: 3}
-  player2Icon: {fileID: 21300000, guid: 71279614b48dd4f33939238e397fb75b, type: 3}
+  player1Icon: {fileID: 21300000, guid: 6e3d24109e68a4a4596a8d47048051a7, type: 3}
+  player2Icon: {fileID: 21300000, guid: 6e3d24109e68a4a4596a8d47048051a7, type: 3}
   player1Health: {fileID: 500982171}
   player2Health: {fileID: 633375796}
 --- !u!1 &1855730915
@@ -5648,7 +5648,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1893671679
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6527,8 +6527,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Credits: \n\nFrancisco Jesus Peralta Salndoval - Director and programer\n\nMauricio
-    Reyna Mill\xE1n - 3D modeler and programer\n\nPedro Daniel Ju\xE1rez Coxca -
+  m_text: "Credits: \n\nFrancisco Jesus Peralta Salndoval - Director and programmer\n\nMauricio
+    Reyna Mill\xE1n - 3D modeler and programmer\n\nPedro Daniel Ju\xE1rez Coxca -
     Character designer and animator\n\nDiego Trejo Lopez - SFX and music producer\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5b7e61f0b3b54714786e9486a14e6ece, type: 2}
