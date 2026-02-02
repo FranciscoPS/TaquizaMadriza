@@ -1273,9 +1273,9 @@ GameObject:
   - component: {fileID: 500982169}
   - component: {fileID: 500982168}
   - component: {fileID: 500982179}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1293,7 +1293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TaquizaMadriza.Characters.PlayerVisualEffects
   invulnerabilityBlinkRate: 0.1
-  invulnerabilityColor: {r: 1, g: 1, b: 1, a: 1}
+  invulnerabilityColor: {r: 0, g: 0.927196, b: 1, a: 1}
   lowHealthThreshold: 0.35
   lowHealthBlinkRate: 0.3
   lowHealthColor: {r: 1, g: 0, b: 0, a: 1}
@@ -1522,7 +1522,7 @@ Transform:
   m_GameObject: {fileID: 500982167}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.63, y: 4.66, z: 1.76}
+  m_LocalPosition: {x: -2.29, y: 4.66, z: 1.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1708,9 +1708,9 @@ GameObject:
   - component: {fileID: 633375794}
   - component: {fileID: 633375793}
   - component: {fileID: 633375804}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1728,7 +1728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TaquizaMadriza.Characters.PlayerVisualEffects
   invulnerabilityBlinkRate: 0.1
-  invulnerabilityColor: {r: 1, g: 1, b: 1, a: 1}
+  invulnerabilityColor: {r: 0, g: 0.9254902, b: 1, a: 1}
   lowHealthThreshold: 0.35
   lowHealthBlinkRate: 0.3
   lowHealthColor: {r: 1, g: 0, b: 0, a: 1}
@@ -1957,7 +1957,7 @@ Transform:
   m_GameObject: {fileID: 633375792}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.37, y: 4.66, z: 1.76}
+  m_LocalPosition: {x: 4, y: 4.66, z: 1.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
