@@ -11,7 +11,11 @@ public class WinScreen : MonoBehaviour
 	[SerializeField] private GameObject winScreenPanel;
 	[SerializeField] private TextMeshProUGUI winnerPlayerTxt;
 
-	[Header("Players")]
+	[Header("Credits")]
+	[SerializeField] private GameObject creditsPanel;
+    [SerializeField] private float creditsDelay = 6f;
+
+    [Header("Players")]
 	[SerializeField] private PlayerHealth player1Health;
 	[SerializeField] private PlayerHealth player2Health;
 
@@ -32,8 +36,10 @@ public class WinScreen : MonoBehaviour
 	private bool matchEnded = false;
 	private Coroutine pulseCoroutine;
 	private Vector3 baseTextScale;
+    private Coroutine creditsCoroutine;
+    private bool creditsShown = false;
 
-	private void Awake()
+    private void Awake()
 	{
 		winScreenPanel.SetActive(false);
 
@@ -90,14 +96,35 @@ public class WinScreen : MonoBehaviour
 			MusicManager.Instance.PlayGameOverMusic();
 		}
 
-		winnerPlayerTxt.text = $"Player {winnerPlayer} Wins!!";
-		winScreenPanel.SetActive(true);
+        winnerPlayerTxt.text = $"Player {winnerPlayer} Wins!!";
+        winScreenPanel.SetActive(true);
 
-		baseTextScale = winnerPlayerTxt.transform.localScale;
-		pulseCoroutine = StartCoroutine(PulseWinnerText());
-	}
+        baseTextScale = winnerPlayerTxt.transform.localScale;
+        pulseCoroutine = StartCoroutine(PulseWinnerText());
 
-	private IEnumerator PulseWinnerText()
+        creditsCoroutine = StartCoroutine(AutoShowCredits());
+    }
+    private void HideWinPanel()
+    {
+        if (creditsCoroutine != null)
+        {
+            StopCoroutine(creditsCoroutine);
+            creditsCoroutine = null;
+        }
+
+        if (pulseCoroutine != null)
+        {
+            StopCoroutine(pulseCoroutine);
+            pulseCoroutine = null;
+        }
+
+        winnerPlayerTxt.transform.localScale = baseTextScale;
+
+        if (winScreenPanel.activeSelf)
+            winScreenPanel.SetActive(false);
+    }
+
+    private IEnumerator PulseWinnerText()
 	{
 		float timer = 0f;
 
@@ -112,7 +139,23 @@ public class WinScreen : MonoBehaviour
 		}
 	}
 
-	public void ReturnMainMenu()
+    private IEnumerator AutoShowCredits()
+    {
+        yield return new WaitForSecondsRealtime(creditsDelay);
+
+        ShowCredits();
+    }
+
+    public void ShowCredits()
+    {
+        if (creditsShown) return;
+
+        creditsShown = true;
+
+        creditsPanel.SetActive(true);
+    }
+
+    public void ReturnMainMenu()
 	{
 		if (AudioManager.Instance != null)
 		{
