@@ -11,6 +11,7 @@ namespace TaquizaMadriza.Characters
     [RequireComponent(typeof(PlayerStateManager))]
     [RequireComponent(typeof(PlayerCombat))]
     [RequireComponent(typeof(PlayerHealth))]
+    [RequireComponent(typeof(PlayerInput))]
     public class PlayerController : MonoBehaviour
     {
         [Header("Movimiento")]
@@ -92,16 +93,25 @@ namespace TaquizaMadriza.Characters
             health.Initialize(playerNumber);
             combat.Initialize(playerNumber);
 
-            if (playerInput != null)
+            if (playerInput == null)
             {
-                var actions = playerInput.actions;
-
-                actions["Movement"].performed += OnMove;
-                actions["Movement"].canceled += OnMove;
-                actions["Jump"].performed += OnJump;
-                actions["Punch"].performed += OnPunch;
-                actions["Kick"].performed += OnKick;
+                Debug.LogError($"PlayerInput no encontrado en {gameObject.name}! Los controles no funcionarán.", this);
+                return;
             }
+
+            if (playerInput.actions == null)
+            {
+                Debug.LogError($"PlayerInput.actions es null en {gameObject.name}! Verifica que el Input Actions Asset esté asignado.", this);
+                return;
+            }
+
+            var actions = playerInput.actions;
+
+            actions["Movement"].performed += OnMove;
+            actions["Movement"].canceled += OnMove;
+            actions["Jump"].performed += OnJump;
+            actions["Punch"].performed += OnPunch;
+            actions["Kick"].performed += OnKick;
         }
 
         private void OnDestroy()
