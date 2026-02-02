@@ -1128,7 +1128,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 500982178}
+  - component: {fileID: 500982180}
   - component: {fileID: 500982179}
   - component: {fileID: 500982175}
   - component: {fileID: 500982174}
@@ -1138,7 +1138,7 @@ GameObject:
   - component: {fileID: 500982170}
   - component: {fileID: 500982169}
   - component: {fileID: 500982168}
-  - component: {fileID: 500982179}
+  - component: {fileID: 500982176}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -1370,16 +1370,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 409680860, guid: d7a436f3cf49ea246bba4eaecd7c9c17, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 2.19, y: 2.49}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &500982179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1397,6 +1388,22 @@ MonoBehaviour:
   voiceVolume: 1
   attackVolume: 0.8
   impactVolume: 0.9
+--- !u!4 &500982180
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500982167}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.4, z: 6.05}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1306420516}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &530957346
 GameObject:
   m_ObjectHideFlags: 0
@@ -3191,12 +3198,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1306420515}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 500982178}
+  m_Father: {fileID: 500982180}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1306420517
 MonoBehaviour:
@@ -5314,7 +5321,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 23.47, y: 17.212862}
+  m_Size: {x: 6.48, y: 7.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -5836,6 +5843,7 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 500982180}
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
@@ -5845,7 +5853,6 @@ SceneRoots:
   - {fileID: 1946852051}
   - {fileID: 1379916838}
   - {fileID: 1800516827}
-  - {fileID: 500982178}
   - {fileID: 633375803}
   - {fileID: 1873919091}
   - {fileID: 1301247471}
