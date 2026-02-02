@@ -13,7 +13,7 @@ namespace TaquizaMadriza.Characters
         private float invulnerabilityBlinkRate = 0.1f;
 
         [SerializeField]
-        private Color invulnerabilityColor = Color.white;
+        private Color invulnerabilityColor = new Color(0.5f, 1f, 1f, 1f); // Cyan claro
 
         [Header("Parpadeo de Vida Baja")]
         [SerializeField]
@@ -25,9 +25,17 @@ namespace TaquizaMadriza.Characters
         [SerializeField]
         private Color lowHealthColor = Color.red;
 
+        [Header("Diferenciaci�n de Jugadores")]
+        [SerializeField]
+        private bool applyPlayerColorTint = true;
+
+        [SerializeField]
+        private Color playerTint = Color.white; // Tint de este jugador espec�fico
+
         private PlayerHealth health;
-        private List<MeshRenderer> playerRenderers = new List<MeshRenderer>();
-        private Dictionary<MeshRenderer, Color> originalColors = new Dictionary<MeshRenderer, Color>();
+        private List<Renderer> playerRenderers = new List<Renderer>();
+        private Dictionary<Renderer, Color> originalColors =
+            new Dictionary<Renderer, Color>();
 
         private Coroutine invulnerabilityBlinkCoroutine;
         private Coroutine lowHealthBlinkCoroutine;
@@ -36,8 +44,9 @@ namespace TaquizaMadriza.Characters
         {
             health = GetComponent<PlayerHealth>();
 
-            MeshRenderer[] allRenderers = GetComponentsInChildren<MeshRenderer>();
-            foreach (var renderer in allRenderers)
+            // Buscar MeshRenderers
+            MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
+            foreach (var renderer in meshRenderers)
             {
                 if (
                     !renderer.gameObject.name.Contains("Hitbox")
@@ -46,12 +55,32 @@ namespace TaquizaMadriza.Characters
                 )
                 {
                     playerRenderers.Add(renderer);
-
                     if (renderer.material != null)
                     {
                         originalColors[renderer] = renderer.material.color;
                     }
                 }
+            }
+
+            // Buscar SpriteRenderers
+            SpriteRenderer[] spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+            foreach (var renderer in spriteRenderers)
+            {
+                if (
+                    !renderer.gameObject.name.Contains("Hitbox")
+                    && !renderer.gameObject.name.Contains("hitbox")
+                    && renderer.gameObject.layer != LayerMask.NameToLayer("Hitbox")
+                )
+                {
+                    playerRenderers.Add(renderer);
+                    originalColors[renderer] = renderer.color;
+                }
+            }
+
+            // Aplicar tint de color seg�n el jugador
+            if (applyPlayerColorTint)
+            {
+                ApplyPlayerTint();
             }
         }
 
@@ -74,14 +103,23 @@ namespace TaquizaMadriza.Characters
         {
             if (isInvulnerable)
             {
-                if (lowHealthBlinkCoroutine == null)
+                // Detener parpadeo de vida baja si existe, la invulnerabilidad tiene prioridad
+                if (lowHealthBlinkCoroutine != null)
                 {
-                    StartInvulnerabilityBlink();
+                    StopLowHealthBlink();
                 }
+                StartInvulnerabilityBlink();
             }
             else
             {
                 StopInvulnerabilityBlink();
+
+                // Restaurar parpadeo de vida baja si corresponde
+                float healthPercentage = health.CurrentHealth / health.MaxHealth;
+                if (healthPercentage <= lowHealthThreshold && healthPercentage > 0)
+                {
+                    StartLowHealthBlink();
+                }
             }
         }
 
@@ -164,9 +202,16 @@ namespace TaquizaMadriza.Characters
         {
             foreach (var renderer in playerRenderers)
             {
-                if (renderer != null && renderer.material != null)
+                if (renderer == null)
+                    continue;
+
+                if (renderer is MeshRenderer meshRenderer && meshRenderer.material != null)
                 {
-                    renderer.material.color = color;
+                    meshRenderer.material.color = color;
+                }
+                else if (renderer is SpriteRenderer spriteRenderer)
+                {
+                    spriteRenderer.color = color;
                 }
             }
         }
@@ -175,10 +220,47 @@ namespace TaquizaMadriza.Characters
         {
             foreach (var kvp in originalColors)
             {
-                if (kvp.Key != null && kvp.Key.material != null)
+                if (kvp.Key == null)
+                    continue;
+
+                if (kvp.Key is MeshRenderer meshRenderer && meshRenderer.material != null)
                 {
-                    kvp.Key.material.color = kvp.Value;
+                    meshRenderer.material.color = kvp.Value;
                 }
+                else if (kvp.Key is SpriteRenderer spriteRenderer)
+                {
+                    spriteRenderer.color = kvp.Value;
+                }
+            }
+        }
+
+        private void ApplyPlayerTint()
+        {
+            // Crear lista temporal para evitar modificar el diccionario durante la iteraci�n
+            List<KeyValuePair<Renderer, Color>> updates = new List<KeyValuePair<Renderer, Color>>();
+
+            foreach (var kvp in originalColors)
+            {
+                if (kvp.Key == null)
+                    continue;
+
+                Color newColor = kvp.Value * playerTint;
+                updates.Add(new KeyValuePair<Renderer, Color>(kvp.Key, newColor));
+
+                if (kvp.Key is MeshRenderer meshRenderer && meshRenderer.material != null)
+                {
+                    meshRenderer.material.color = newColor;
+                }
+                else if (kvp.Key is SpriteRenderer spriteRenderer)
+                {
+                    spriteRenderer.color = newColor;
+                }
+            }
+
+            // Actualizar el diccionario con los nuevos colores
+            foreach (var update in updates)
+            {
+                originalColors[update.Key] = update.Value;
             }
         }
     }
