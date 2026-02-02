@@ -23,10 +23,6 @@ namespace TaquizaMadriza.Combat
         [SerializeField]
         private float comboResetTime = 0.5f;
 
-        [Header("Debug")]
-        [SerializeField]
-        private bool showHitboxes = true;
-
         private PlayerStateManager stateManager;
         private Rigidbody rb;
         private PlayerController playerController;
@@ -85,24 +81,11 @@ namespace TaquizaMadriza.Combat
                 var collider = punch.GetComponent<BoxCollider>();
                 collider.isTrigger = true;
 
-                if (!showHitboxes)
+                // Deshabilitar el MeshRenderer para evitar cubos rosas en build
+                var punchRenderer = punch.GetComponent<MeshRenderer>();
+                if (punchRenderer != null)
                 {
-                    Destroy(punch.GetComponent<MeshRenderer>());
-                }
-                else
-                {
-                    var renderer = punch.GetComponent<MeshRenderer>();
-                    var mat = new Material(Shader.Find("Standard"));
-                    mat.color = new Color(1f, 0f, 0f, 0.3f);
-                    mat.SetFloat("_Mode", 3);
-                    mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-                    mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-                    mat.SetInt("_ZWrite", 0);
-                    mat.DisableKeyword("_ALPHATEST_ON");
-                    mat.EnableKeyword("_ALPHABLEND_ON");
-                    mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-                    mat.renderQueue = 3000;
-                    renderer.material = mat;
+                    punchRenderer.enabled = false;
                 }
 
                 punch.AddComponent<Hitbox>();
@@ -124,24 +107,11 @@ namespace TaquizaMadriza.Combat
                 var collider = kick.GetComponent<BoxCollider>();
                 collider.isTrigger = true;
 
-                if (!showHitboxes)
+                // Deshabilitar el MeshRenderer para evitar cubos rosas en build
+                var kickRenderer = kick.GetComponent<MeshRenderer>();
+                if (kickRenderer != null)
                 {
-                    Destroy(kick.GetComponent<MeshRenderer>());
-                }
-                else
-                {
-                    var renderer = kick.GetComponent<MeshRenderer>();
-                    var mat = new Material(Shader.Find("Standard"));
-                    mat.color = new Color(0f, 0f, 1f, 0.3f);
-                    mat.SetFloat("_Mode", 3);
-                    mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-                    mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-                    mat.SetInt("_ZWrite", 0);
-                    mat.DisableKeyword("_ALPHATEST_ON");
-                    mat.EnableKeyword("_ALPHABLEND_ON");
-                    mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-                    mat.renderQueue = 3000;
-                    renderer.material = mat;
+                    kickRenderer.enabled = false;
                 }
 
                 kick.AddComponent<Hitbox>();

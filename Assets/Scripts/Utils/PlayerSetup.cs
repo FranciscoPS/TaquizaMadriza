@@ -2,8 +2,13 @@ using TaquizaMadriza.Characters;
 using TaquizaMadriza.Combat;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace TaquizaMadriza.Utils
 {
+#if UNITY_EDITOR
     [ExecuteInEditMode]
     public class PlayerSetup : MonoBehaviour
     {
@@ -42,7 +47,7 @@ namespace TaquizaMadriza.Utils
             var controller = GetComponent<PlayerController>();
             if (controller != null)
             {
-                var so = new UnityEditor.SerializedObject(controller);
+                var so = new SerializedObject(controller);
                 so.FindProperty("playerNumber").intValue = playerNumber;
                 so.ApplyModifiedProperties();
             }
@@ -50,10 +55,11 @@ namespace TaquizaMadriza.Utils
             var health = GetComponent<PlayerHealth>();
             if (health != null)
             {
-                var so = new UnityEditor.SerializedObject(health);
+                var so = new SerializedObject(health);
                 so.FindProperty("playerNumber").intValue = playerNumber;
                 so.ApplyModifiedProperties();
             }
         }
     }
+#endif
 }
