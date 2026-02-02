@@ -32,17 +32,25 @@ namespace TaquizaMadriza.Environment
 
         private void OnTriggerEnter(Collider other)
         {
+            if (other == null)
+                return;
+
             PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
             if (playerHealth == null)
                 return;
 
+            // Si el jugador ya está muerto, no hacer nada (el GameManager manejará la muerte)
             if (playerHealth.IsDead())
                 return;
 
             playerHealth.TakeDamageFromEnvironment(outOfBoundsDamage);
 
-            Vector3 spawnPos = respawnPoint != null ? respawnPoint.position : respawnPosition;
-            playerHealth.RespawnAtPosition(spawnPos, respawnInvulnerabilityDuration);
+            // Solo respawnear si aún tiene vida después del daño
+            if (!playerHealth.IsDead())
+            {
+                Vector3 spawnPos = respawnPoint != null ? respawnPoint.position : respawnPosition;
+                playerHealth.RespawnAtPosition(spawnPos, respawnInvulnerabilityDuration);
+            }
         }
 
         private void OnDrawGizmos()
