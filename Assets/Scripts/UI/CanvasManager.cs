@@ -7,8 +7,9 @@ public class CanvasManager : MonoBehaviour
 	[Header("Canvas Panels")]
 	[SerializeField] private GameObject mainMenuPanel;
 	[SerializeField] private GameObject controlsPanel;
+	[SerializeField] private GameObject TipsPanel;
 
-	private void Awake()
+    private void Awake()
 	{
 		ShowPanel(mainMenuPanel);
 	}
@@ -33,6 +34,11 @@ public class CanvasManager : MonoBehaviour
 		ShowPanel(mainMenuPanel);
 	}
 
+	public void ShowTips()
+	{
+		ShowPanel(TipsPanel); 
+	}
+
 	private void ShowPanel(GameObject panelToShow)
 	{
 		if (mainMenuPanel == null || controlsPanel == null)
@@ -42,8 +48,9 @@ public class CanvasManager : MonoBehaviour
 
 		mainMenuPanel.SetActive(false);
 		controlsPanel.SetActive(false);
+		TipsPanel.SetActive(false);
 
-		panelToShow.SetActive(true);
+        panelToShow.SetActive(true);
 	}
 	
 	public void LoadNextScene()
