@@ -156,6 +156,9 @@ namespace TaquizaMadriza.Characters
 
         private void HandleMovement()
         {
+            if (rb.isKinematic)
+                return;
+
             if (moveInput.sqrMagnitude < 0.01f)
             {
                 Vector3 velocity = rb.linearVelocity;
