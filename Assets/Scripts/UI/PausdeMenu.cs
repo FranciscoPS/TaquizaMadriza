@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TaquizaMadriza.Audio;
 
 public class PausdeMenu : MonoBehaviour
 {
@@ -38,6 +39,11 @@ public class PausdeMenu : MonoBehaviour
 
 	public void ResumeMatch()
 	{
+		if (AudioManager.Instance != null)
+		{
+			AudioManager.Instance.PlayButtonSound();
+		}
+		
 		if (pauseMenuPanel != null)
 			pauseMenuPanel.SetActive(false);
 
@@ -49,6 +55,11 @@ public class PausdeMenu : MonoBehaviour
 
 	public void QuitMatch()
 	{
+		if (AudioManager.Instance != null)
+		{
+			AudioManager.Instance.PlayButtonSound();
+		}
+		
 		ResumeMatch();
 
 		int currentIndex = SceneManager.GetActiveScene().buildIndex;
@@ -60,7 +71,6 @@ public class PausdeMenu : MonoBehaviour
 		}
 		else
 		{
-			Debug.LogWarning("No hay escena anterior válida en Build Settings. Cargando escena 0.");
 			SceneManager.LoadScene(0);
 		}
 	}

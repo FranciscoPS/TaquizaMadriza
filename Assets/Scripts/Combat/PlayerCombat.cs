@@ -39,6 +39,7 @@ namespace TaquizaMadriza.Combat
         private float lastAttackTime = 0f;
         private bool isAttacking = false;
         private Coroutine attackCoroutine;
+        private Coroutine comboResetCoroutine;
         private int playerNumber = 1;
 
         private void Awake()
@@ -178,6 +179,9 @@ namespace TaquizaMadriza.Combat
 
         public void Punch(InputAction.CallbackContext context)
         {
+            if (this == null || !enabled)
+                return;
+
             if (!context.performed)
                 return;
 
@@ -209,6 +213,9 @@ namespace TaquizaMadriza.Combat
 
         public void Kick(InputAction.CallbackContext context)
         {
+            if (this == null || !enabled)
+                return;
+
             if (!context.performed)
                 return;
 
@@ -277,7 +284,7 @@ namespace TaquizaMadriza.Combat
                 attackData.knockbackForce = 15f;
             }
 
-            if (attackCoroutine != null)
+            if (attackCoroutine != null && this != null && gameObject != null)
                 StopCoroutine(attackCoroutine);
 
             attackCoroutine = StartCoroutine(AttackRoutine(attackData));
@@ -287,7 +294,7 @@ namespace TaquizaMadriza.Combat
         {
             hasUsedAirAttack = true;
 
-            if (attackCoroutine != null)
+            if (attackCoroutine != null && this != null && gameObject != null)
                 StopCoroutine(attackCoroutine);
 
             attackCoroutine = StartCoroutine(AttackRoutine(attackData));
@@ -339,6 +346,28 @@ namespace TaquizaMadriza.Combat
             {
                 ResetCombo();
             }
+        }
+
+        private void OnDisable()
+        {
+            if (attackCoroutine != null)
+            {
+                StopCoroutine(attackCoroutine);
+                attackCoroutine = null;
+            }
+
+            if (comboResetCoroutine != null)
+            {
+                StopCoroutine(comboResetCoroutine);
+                comboResetCoroutine = null;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            StopAllCoroutines();
+            attackCoroutine = null;
+            comboResetCoroutine = null;
         }
 
         private void ResetCombo()
