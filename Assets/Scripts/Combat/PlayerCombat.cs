@@ -208,7 +208,7 @@ namespace TaquizaMadriza.Combat
 
             if (animationController != null)
             {
-                animationController.TriggerPunchAnimation();
+                animationController.TriggerPunchAnimation(currentComboCount);
             }
 
             if (audioController != null)

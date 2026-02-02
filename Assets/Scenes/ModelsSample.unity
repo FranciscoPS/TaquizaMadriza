@@ -5100,8 +5100,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TaquizaMadriza.UI.GameUIManager
   player1HealthBar: {fileID: 1020129503}
   player2HealthBar: {fileID: 1783107409}
-  player1Icon: {fileID: 21300000, guid: 71279614b48dd4f33939238e397fb75b, type: 3}
-  player2Icon: {fileID: 21300000, guid: 71279614b48dd4f33939238e397fb75b, type: 3}
+  player1Icon: {fileID: 21300000, guid: 6e3d24109e68a4a4596a8d47048051a7, type: 3}
+  player2Icon: {fileID: 21300000, guid: 6e3d24109e68a4a4596a8d47048051a7, type: 3}
   player1Health: {fileID: 500982171}
   player2Health: {fileID: 633375796}
 --- !u!1 &1855730915
@@ -5949,9 +5949,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WinScreen
   winScreenPanel: {fileID: 1065018795}
   winnerPlayerTxt: {fileID: 1024903338}
-  creditsPanel: {fileID: 62811989}
-  creditsMusicClip: {fileID: 8300000, guid: d4cfb0bd27396430d90082a0cee0bcc7, type: 3}
-  creditsDelay: 6
   player1Health: {fileID: 500982171}
   player2Health: {fileID: 633375796}
   winDelay: 3

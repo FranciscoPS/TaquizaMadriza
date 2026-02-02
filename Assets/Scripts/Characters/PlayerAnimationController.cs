@@ -13,10 +13,13 @@ namespace TaquizaMadriza.Characters
 
         private static readonly int IsWalkingHash = Animator.StringToHash("IsWalking");
         private static readonly int IsIdleHash = Animator.StringToHash("IsIdle");
+        private static readonly int IsJumpingHash = Animator.StringToHash("IsJumping");
         private static readonly int KickTriggerHash = Animator.StringToHash("Kick");
         private static readonly int PunchTriggerHash = Animator.StringToHash("Punch");
+        private static readonly int ComboCountHash = Animator.StringToHash("ComboCount");
         private static readonly int DamageTriggerHash = Animator.StringToHash("Damage");
         private static readonly int IsDownedHash = Animator.StringToHash("IsDowned");
+        private static readonly int IsDeadHash = Animator.StringToHash("IsDead");
 
         private void Awake()
         {
@@ -66,9 +69,17 @@ namespace TaquizaMadriza.Characters
                     animator.SetBool(IsWalkingHash, false);
                     break;
 
+                case PlayerState.Jumping:
+                    animator.SetBool(IsJumpingHash, false);
+                    break;
+
                 case PlayerState.Knockback:
                 case PlayerState.Grounded:
                     animator.SetBool(IsDownedHash, false);
+                    break;
+
+                case PlayerState.Dead:
+                    animator.SetBool(IsDeadHash, false);
                     break;
             }
 
@@ -86,6 +97,11 @@ namespace TaquizaMadriza.Characters
 
                 case PlayerState.Hit:
                     animator.SetTrigger(DamageTriggerHash);
+                    animator.speed = 1f;
+                    break;
+
+                case PlayerState.Jumping:
+                    animator.SetBool(IsJumpingHash, true);
                     animator.speed = 1f;
                     break;
 
@@ -109,16 +125,21 @@ namespace TaquizaMadriza.Characters
                     animator.speed = 1f;
                     break;
 
-                case PlayerState.Attacking:
                 case PlayerState.Dead:
+                    animator.SetBool(IsDeadHash, true);
+                    animator.speed = 1f;
+                    break;
+
+                case PlayerState.Attacking:
                     break;
             }
         }
 
-        public void TriggerPunchAnimation()
+        public void TriggerPunchAnimation(int comboCount = 0)
         {
             if (animator != null)
             {
+                animator.SetInteger(ComboCountHash, comboCount);
                 animator.SetTrigger(PunchTriggerHash);
             }
         }
