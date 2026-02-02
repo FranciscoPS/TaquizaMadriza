@@ -13,7 +13,7 @@ namespace TaquizaMadriza.Characters
         private float invulnerabilityBlinkRate = 0.1f;
 
         [SerializeField]
-        private Color invulnerabilityColor = new Color(0.5f, 1f, 1f, 1f); // Cyan claro
+        private Color invulnerabilityColor = new Color(0.5f, 1f, 1f, 1f);
 
         [Header("Parpadeo de Vida Baja")]
         [SerializeField]
@@ -30,12 +30,11 @@ namespace TaquizaMadriza.Characters
         private bool applyPlayerColorTint = true;
 
         [SerializeField]
-        private Color playerTint = Color.white; // Tint de este jugador espec�fico
+        private Color playerTint = Color.white;
 
         private PlayerHealth health;
         private List<Renderer> playerRenderers = new List<Renderer>();
-        private Dictionary<Renderer, Color> originalColors =
-            new Dictionary<Renderer, Color>();
+        private Dictionary<Renderer, Color> originalColors = new Dictionary<Renderer, Color>();
 
         private Coroutine invulnerabilityBlinkCoroutine;
         private Coroutine lowHealthBlinkCoroutine;
@@ -44,7 +43,6 @@ namespace TaquizaMadriza.Characters
         {
             health = GetComponent<PlayerHealth>();
 
-            // Buscar MeshRenderers
             MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
             foreach (var renderer in meshRenderers)
             {
@@ -62,7 +60,6 @@ namespace TaquizaMadriza.Characters
                 }
             }
 
-            // Buscar SpriteRenderers
             SpriteRenderer[] spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
             foreach (var renderer in spriteRenderers)
             {
@@ -77,7 +74,6 @@ namespace TaquizaMadriza.Characters
                 }
             }
 
-            // Aplicar tint de color seg�n el jugador
             if (applyPlayerColorTint)
             {
                 ApplyPlayerTint();
@@ -103,7 +99,6 @@ namespace TaquizaMadriza.Characters
         {
             if (isInvulnerable)
             {
-                // Detener parpadeo de vida baja si existe, la invulnerabilidad tiene prioridad
                 if (lowHealthBlinkCoroutine != null)
                 {
                     StopLowHealthBlink();
@@ -114,7 +109,6 @@ namespace TaquizaMadriza.Characters
             {
                 StopInvulnerabilityBlink();
 
-                // Restaurar parpadeo de vida baja si corresponde
                 float healthPercentage = health.CurrentHealth / health.MaxHealth;
                 if (healthPercentage <= lowHealthThreshold && healthPercentage > 0)
                 {
@@ -236,7 +230,6 @@ namespace TaquizaMadriza.Characters
 
         private void ApplyPlayerTint()
         {
-            // Crear lista temporal para evitar modificar el diccionario durante la iteraci�n
             List<KeyValuePair<Renderer, Color>> updates = new List<KeyValuePair<Renderer, Color>>();
 
             foreach (var kvp in originalColors)
@@ -257,7 +250,6 @@ namespace TaquizaMadriza.Characters
                 }
             }
 
-            // Actualizar el diccionario con los nuevos colores
             foreach (var update in updates)
             {
                 originalColors[update.Key] = update.Value;
