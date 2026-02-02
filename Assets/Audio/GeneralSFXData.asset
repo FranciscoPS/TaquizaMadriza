@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21d27ec9420e949b5bd4af4c1bbf6d39, type: 3}
   m_Name: GeneralSFXData
   m_EditorClassIdentifier: Assembly-CSharp::TaquizaMadriza.Audio.GeneralSFXData
-  sfxButton: {fileID: 8300000, guid: c12a87a09aeb04cfda56bc9b307c45bd, type: 3}
+  sfxButton: {fileID: 8300000, guid: b7412bf0d7019f6439882fbd1a5b16e6, type: 3}
   sfxFloorDown:
   - {fileID: 8300000, guid: e6e6b5d5d8b4240e5a88fd864b938fcd, type: 3}
   - {fileID: 8300000, guid: 6b52e69c4c4814356ad1c6baf90734ea, type: 3}
