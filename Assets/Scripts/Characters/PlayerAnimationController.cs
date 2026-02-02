@@ -9,7 +9,6 @@ namespace TaquizaMadriza.Characters
         private PlayerStateManager stateManager;
         private PlayerController controller;
 
-        // Nombres de parámetros del Animator
         private static readonly int IsWalkingHash = Animator.StringToHash("IsWalking");
         private static readonly int IsIdleHash = Animator.StringToHash("IsIdle");
         private static readonly int KickTriggerHash = Animator.StringToHash("Kick");
@@ -20,7 +19,6 @@ namespace TaquizaMadriza.Characters
 
         private void Awake()
         {
-            // Buscar el Animator en los hijos (VisualContainer)
             animator = GetComponentInChildren<Animator>();
             if (animator == null)
             {
@@ -35,7 +33,6 @@ namespace TaquizaMadriza.Characters
 
         private void Start()
         {
-            // Suscribirse a cambios de estado
             if (stateManager != null)
             {
                 stateManager.OnStateChanged += HandleStateChanged;
@@ -59,9 +56,6 @@ namespace TaquizaMadriza.Characters
             if (previousState == newState)
                 return;
 
-            Debug.Log($"[AnimController] {gameObject.name}: {previousState} -> {newState}");
-
-            // Desactivar el estado anterior
             switch (previousState)
             {
                 case PlayerState.Idle:
@@ -74,7 +68,6 @@ namespace TaquizaMadriza.Characters
                     break;
             }
 
-            // Activar el nuevo estado
             switch (newState)
             {
                 case PlayerState.Idle:
@@ -89,13 +82,10 @@ namespace TaquizaMadriza.Characters
                 case PlayerState.Attacking:
                 case PlayerState.Hit:
                 case PlayerState.Dead:
-                    // Los triggers de ataque se manejan desde PlayerCombat
-                    // Hit y Dead requieren parámetros adicionales en el Animator
                     break;
             }
         }
 
-        // Método público para que PlayerCombat active animaciones de ataque
         public void TriggerPunchAnimation()
         {
             if (animator != null)

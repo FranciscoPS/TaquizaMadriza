@@ -196,7 +196,6 @@ namespace TaquizaMadriza.Combat
                 {
                     PerformAirAttack(punchAttack);
                     
-                    // Reproducir sonido de punch
                     if (audioController != null)
                     {
                         audioController.PlayPunchSound();
