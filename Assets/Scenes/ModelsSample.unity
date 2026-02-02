@@ -1164,6 +1164,8 @@ MonoBehaviour:
   lowHealthThreshold: 0.35
   lowHealthBlinkRate: 0.3
   lowHealthColor: {r: 1, g: 0, b: 0, a: 1}
+  applyPlayerColorTint: 1
+  playerTint: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &500982169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1604,6 +1606,8 @@ MonoBehaviour:
   lowHealthThreshold: 0.35
   lowHealthBlinkRate: 0.3
   lowHealthColor: {r: 1, g: 0, b: 0, a: 1}
+  applyPlayerColorTint: 1
+  playerTint: {r: 1, g: 0, b: 0.8162708, a: 1}
 --- !u!114 &633375794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5458,6 +5462,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WinScreen
   winScreenPanel: {fileID: 1065018795}
   winnerPlayerTxt: {fileID: 1024903338}
+  creditsPanel: {fileID: 0}
+  creditsMusicClip: {fileID: 0}
+  creditsDelay: 6
   player1Health: {fileID: 500982171}
   player2Health: {fileID: 633375796}
   winDelay: 3
