@@ -1297,6 +1297,8 @@ MonoBehaviour:
   lowHealthThreshold: 0.35
   lowHealthBlinkRate: 0.3
   lowHealthColor: {r: 1, g: 0, b: 0, a: 1}
+  applyPlayerColorTint: 1
+  playerTint: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &500982169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1732,6 +1734,8 @@ MonoBehaviour:
   lowHealthThreshold: 0.35
   lowHealthBlinkRate: 0.3
   lowHealthColor: {r: 1, g: 0, b: 0, a: 1}
+  applyPlayerColorTint: 1
+  playerTint: {r: 0.7861854, g: 0.07075471, b: 1, a: 1}
 --- !u!114 &633375794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5648,7 +5652,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1893671679
 RectTransform:
   m_ObjectHideFlags: 0
