@@ -13,6 +13,7 @@ public class WinScreen : MonoBehaviour
 
 	[Header("Credits")]
 	[SerializeField] private GameObject creditsPanel;
+	[SerializeField] private AudioClip creditsMusicClip;
     [SerializeField] private float creditsDelay = 6f;
 
     [Header("Players")]
@@ -153,6 +154,11 @@ public class WinScreen : MonoBehaviour
         creditsShown = true;
 
         creditsPanel.SetActive(true);
+
+        if (creditsMusicClip != null && MusicManager.Instance != null)
+        {
+            MusicManager.Instance.PlayMusic(creditsMusicClip, true);
+        }
     }
 
     public void ReturnMainMenu()

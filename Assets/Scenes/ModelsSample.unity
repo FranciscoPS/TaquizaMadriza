@@ -6015,6 +6015,7 @@ MonoBehaviour:
   winScreenPanel: {fileID: 1065018795}
   winnerPlayerTxt: {fileID: 1024903338}
   creditsPanel: {fileID: 1893671678}
+  creditsMusicClip: {fileID: 8300000, guid: d4cfb0bd27396430d90082a0cee0bcc7, type: 3}
   creditsDelay: 6
   player1Health: {fileID: 500982171}
   player2Health: {fileID: 633375796}
