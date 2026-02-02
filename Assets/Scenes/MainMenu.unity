@@ -749,7 +749,6 @@ GameObject:
   - component: {fileID: 500480174}
   - component: {fileID: 500480173}
   - component: {fileID: 500480172}
-  - component: {fileID: 500480175}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -848,7 +847,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &564842965
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1626,7 +1625,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1163589941
 RectTransform:
   m_ObjectHideFlags: 0
