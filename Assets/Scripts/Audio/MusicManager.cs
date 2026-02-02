@@ -20,43 +20,35 @@ namespace TaquizaMadriza.Audio
         [SerializeField]
         private float musicVolume = 0.6f;
         
-        [Header("Fade Settings")]
-        [SerializeField]
-        private float fadeOutDuration = 1f;
-        
-        [SerializeField]
-        private float fadeInDuration = 1f;
-        
-        private AudioClip currentClip;
-        private bool isFading = false;
-        
-        private void Awake()
+    private AudioClip currentClip;
+    
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
         {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-            
-            SetupMusicSource();
-            
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            Destroy(gameObject);
+            return;
         }
         
-        private void Start()
-        {
-            string sceneName = SceneManager.GetActiveScene().name;
-            
-            if (sceneName.Contains("MainMenu"))
-            {
-                PlayMusic(musicData.menuInicio, true);
-            }
-        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
         
-        private void OnDestroy()
+        SetupMusicSource();
+        
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    
+    private void Start()
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+        
+        if (sceneName.Contains("MainMenu"))
+        {
+            PlayMusic(musicData.menuInicio, true);
+        }
+    }
+    
+    private void OnDestroy()
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }

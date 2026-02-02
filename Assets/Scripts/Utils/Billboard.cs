@@ -1,3 +1,4 @@
+using TaquizaMadriza.Characters;
 using UnityEngine;
 
 namespace TaquizaMadriza.Utils
@@ -14,32 +15,58 @@ namespace TaquizaMadriza.Utils
         [SerializeField]
         private bool freezeZRotation = true;
 
+        [SerializeField]
+        private bool keepInitialRotation = true;
+
+        [Header("Sprite Flip")]
+        [SerializeField]
+        private bool flipSpriteWithMovement = true;
+
         private Camera mainCamera;
+        private Quaternion initialRotation;
+        private PlayerController playerController;
+        private Vector3 initialScale;
 
         private void Start()
         {
             mainCamera = Camera.main;
+            initialRotation = transform.rotation;
+            initialScale = transform.localScale;
+            
+            // Buscar el PlayerController en el padre
+            playerController = GetComponentInParent<PlayerController>();
         }
 
         private void LateUpdate()
         {
-            if (mainCamera == null)
-                return;
+            if (keepInitialRotation)
+            {
+                transform.rotation = initialRotation;
+            }
+            else if (mainCamera != null)
+            {
+                Vector3 directionToCamera = mainCamera.transform.position - transform.position;
+                Quaternion targetRotation = Quaternion.LookRotation(directionToCamera);
+                Vector3 euler = targetRotation.eulerAngles;
 
-            Vector3 directionToCamera = mainCamera.transform.position - transform.position;
+                if (freezeXRotation)
+                    euler.x = 0;
+                if (freezeYRotation)
+                    euler.y = 0;
+                if (freezeZRotation)
+                    euler.z = 0;
 
-            Quaternion targetRotation = Quaternion.LookRotation(directionToCamera);
+                transform.rotation = Quaternion.Euler(euler);
+            }
 
-            Vector3 euler = targetRotation.eulerAngles;
-
-            if (freezeXRotation)
-                euler.x = 0;
-            if (freezeYRotation)
-                euler.y = 0;
-            if (freezeZRotation)
-                euler.z = 0;
-
-            transform.rotation = Quaternion.Euler(euler);
+            // Flip del sprite basado en la dirección del jugador
+            if (flipSpriteWithMovement && playerController != null)
+            {
+                int facingDir = playerController.GetFacingDirection();
+                Vector3 newScale = initialScale;
+                newScale.x = Mathf.Abs(initialScale.x) * facingDir;
+                transform.localScale = newScale;
+            }
         }
     }
 }

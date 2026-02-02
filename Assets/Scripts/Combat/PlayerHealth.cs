@@ -220,6 +220,9 @@ namespace TaquizaMadriza.Combat
 
         public void RespawnAtPosition(Vector3 position, float invulnerabilityTime)
         {
+            if (rb == null || stateManager == null)
+                return;
+
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
 

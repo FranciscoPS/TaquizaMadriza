@@ -99,22 +99,22 @@ namespace TaquizaMadriza.Characters
                 actions["Movement"].performed += OnMove;
                 actions["Movement"].canceled += OnMove;
                 actions["Jump"].performed += OnJump;
-                actions["Punch"].performed += context => combat.Punch(context);
-                actions["Kick"].performed += context => combat.Kick(context);
+                actions["Punch"].performed += OnPunch;
+                actions["Kick"].performed += OnKick;
             }
         }
 
         private void OnDestroy()
         {
-            if (playerInput != null)
+            if (playerInput != null && playerInput.actions != null)
             {
                 var actions = playerInput.actions;
 
                 actions["Movement"].performed -= OnMove;
                 actions["Movement"].canceled -= OnMove;
                 actions["Jump"].performed -= OnJump;
-                actions["Punch"].performed -= context => combat.Punch(context);
-                actions["Kick"].performed -= context => combat.Kick(context);
+                actions["Punch"].performed -= OnPunch;
+                actions["Kick"].performed -= OnKick;
             }
         }
 
@@ -227,7 +227,7 @@ namespace TaquizaMadriza.Characters
 
         private void ApplyGravity()
         {
-            if (!isGrounded)
+            if (!isGrounded && !rb.isKinematic)
             {
                 Vector3 velocity = rb.linearVelocity;
                 velocity.y += gravity * Time.fixedDeltaTime;
@@ -253,6 +253,22 @@ namespace TaquizaMadriza.Characters
             if (context.performed)
             {
                 jumpRequested = true;
+            }
+        }
+
+        private void OnPunch(InputAction.CallbackContext context)
+        {
+            if (combat != null)
+            {
+                combat.Punch(context);
+            }
+        }
+
+        private void OnKick(InputAction.CallbackContext context)
+        {
+            if (combat != null)
+            {
+                combat.Kick(context);
             }
         }
 
